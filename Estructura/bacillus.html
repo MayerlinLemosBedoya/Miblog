@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retiro de Nestlé y Bacillus cereus | Biología Ilustrativa</title>
+  <link rel="icon" type="image/x-icon" href="Favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde-oscuro: #1a3d2b;
+      --verde-medio: #2d6a4f;
+      --verde-claro: #74c69d;
+      --verde-palido: #d8f3dc;
+      --verde-mint: #f0faf3;
+      --acento: #40916c;
+      --texto: #1b2d23;
+      --texto-suave: #4a6358;
+      --blanco: #ffffff;
+      --naranja: #f4a226;
+      --naranja-bg: #fff8f0;
+      --naranja-borde: #fcd9a0;
+      --rojo-bg: #fff5f5;
+      --rojo-borde: #fecaca;
+      --sombra: 0 4px 24px rgba(26,61,43,0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--blanco); color: var(--texto); line-height: 1.8; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--verde-palido); padding: 0.75rem 2rem; }
+    .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    header img { height: 52px; width: auto; object-fit: contain; }
+    nav { display: flex; align-items: center; gap: 2rem; }
+    nav a { font-weight: 500; font-size: 0.9rem; color: var(--verde-oscuro); text-decoration: none; letter-spacing: 0.03em; position: relative; padding-bottom: 2px; transition: color 0.2s; }
+    nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--verde-claro); transition: width 0.3s ease; }
+    nav a:hover { color: var(--acento); }
+    nav a:hover::after { width: 100%; }
+    .menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--verde-oscuro); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--verde-mint); padding: 1rem 2rem 1.5rem; gap: 1rem; border-top: 1px solid var(--verde-palido); }
+    .mobile-menu a { font-weight: 500; color: var(--verde-oscuro); text-decoration: none; font-size: 1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--verde-palido); }
+    .mobile-menu.open { display: flex; }
+
+    /* HERO */
+    .article-hero { background-color: var(--verde-oscuro); padding: 5rem 2rem 4rem; position: relative; overflow: hidden; text-align: center; }
+    .article-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Ccircle cx='80' cy='80' r='38' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.25'/%3E%3Ccircle cx='80' cy='80' r='26' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.18'/%3E%3Ccircle cx='66' cy='72' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Crect x='160' y='30' width='18' height='120' rx='9' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Cpath d='M160 50 Q178 60 160 70 Q178 80 160 90 Q178 100 160 110 Q178 120 160 130' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.22'/%3E%3Cellipse cx='400' cy='70' rx='14' ry='40' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Ccircle cx='510' cy='90' r='32' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.18'/%3E%3C/svg%3E"); background-size: 600px 600px; background-repeat: repeat; z-index: 0; }
+    .article-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,61,43,0.90) 0%, rgba(45,106,79,0.82) 60%, rgba(64,145,108,0.86) 100%); z-index: 0; }
+    .article-hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+    .hero-tag { display: inline-block; background: rgba(116,198,157,0.2); border: 1px solid rgba(116,198,157,0.4); color: var(--verde-claro); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.2rem; }
+    .article-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--blanco); line-height: 1.2; margin-bottom: 1rem; }
+    .article-hero h1 em { font-style: italic; color: var(--verde-claro); }
+    .article-meta { color: rgba(255,255,255,0.60); font-size: 0.85rem; }
+
+    /* ALERTA */
+    .alert-banner { background: var(--naranja-bg); border: 1px solid var(--naranja-borde); border-left: 4px solid var(--naranja); border-radius: 12px; padding: 1.2rem 1.5rem; margin: 2.5rem auto; max-width: 740px; display: flex; align-items: flex-start; gap: 1rem; }
+    .alert-banner .alert-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .alert-banner p { font-size: 0.92rem; color: #7a4500; line-height: 1.7; margin: 0; }
+    .alert-banner strong { color: #5a3200; }
+
+    /* CONTENIDO */
+    .article-content { max-width: 740px; margin: 0 auto; padding: 1rem 1.5rem 5rem; }
+    .intro { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-style: italic; color: var(--texto-suave); border-left: 3px solid var(--verde-claro); padding-left: 1.2rem; margin-bottom: 2.5rem; line-height: 1.7; }
+    .article-content p { font-size: 1rem; color: var(--texto); margin-bottom: 1.4rem; line-height: 1.85; }
+    .article-content h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--verde-oscuro); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--verde-palido); }
+    .article-content em { font-style: italic; }
+    .article-content strong { color: var(--verde-medio); }
+
+    /* Foto esporas */
+    .article-img { width: 100%; border-radius: 14px; box-shadow: var(--sombra); margin: 1.5rem 0; object-fit: cover; }
+    .img-caption { text-align: center; font-size: 0.83rem; color: var(--texto-suave); font-style: italic; margin-top: -0.8rem; margin-bottom: 1.5rem; }
+
+    /* HACCP comparación */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+    .compare-card { border-radius: 14px; padding: 1.4rem; border: 1px solid; }
+    .compare-card.verde { background: var(--verde-mint); border-color: var(--verde-palido); }
+    .compare-card.naranja { background: var(--naranja-bg); border-color: var(--naranja-borde); }
+    .compare-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .compare-card.verde h4 { color: var(--verde-oscuro); }
+    .compare-card.naranja h4 { color: #7a4500; }
+    .compare-card p { font-size: 0.9rem; color: var(--texto-suave); line-height: 1.7; margin: 0; }
+
+    /* Esporas — condiciones adversas */
+    .conditions-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 1.2rem 0; }
+    .condition-chip { display: flex; align-items: center; gap: 0.4rem; background: var(--rojo-bg); border: 1px solid var(--rojo-borde); border-radius: 100px; padding: 0.35rem 0.9rem; font-size: 0.85rem; color: #7f1d1d; font-weight: 500; }
+
+    /* Highlight */
+    .highlight-box { background: var(--verde-mint); border: 1px solid var(--verde-palido); border-left: 4px solid var(--verde-claro); border-radius: 12px; padding: 1.5rem 1.8rem; margin: 1.5rem 0; font-size: 0.97rem; color: var(--texto-suave); line-height: 1.8; }
+    .highlight-box strong { color: var(--verde-oscuro); }
+
+    /* Diferencia contaminación vs intoxicación */
+    .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+    .concept-card { background: var(--blanco); border: 1px solid var(--verde-palido); border-radius: 14px; padding: 1.4rem; box-shadow: var(--sombra); }
+    .concept-card .concept-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+    .concept-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--verde-oscuro); margin-bottom: 0.5rem; }
+    .concept-card p { font-size: 0.88rem; color: var(--texto-suave); line-height: 1.65; margin: 0; }
+
+    /* Reflexión cierre */
+    .closing-box { background: var(--verde-oscuro); border-radius: 16px; padding: 2.5rem; margin: 3rem 0 2rem; }
+    .closing-box p { color: rgba(255,255,255,0.80); font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
+    .closing-box p:last-child { margin: 0; }
+    .closing-box strong { color: var(--verde-claro); }
+
+    .article-link { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--verde-mint); border: 1px solid var(--verde-palido); color: var(--acento); font-weight: 600; font-size: 0.9rem; padding: 0.7rem 1.2rem; border-radius: 10px; text-decoration: none; margin-top: 1rem; transition: background 0.2s, color 0.2s; }
+    .article-link:hover { background: var(--verde-palido); color: var(--verde-oscuro); }
+
+    .article-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-top: 2rem; border-top: 1px solid var(--verde-palido); margin-top: 2rem; }
+    .article-tag-item { background: var(--verde-mint); border: 1px solid var(--verde-palido); color: var(--acento); font-size: 0.78rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 100px; }
+
+    /* Footer */
+    footer { background: var(--verde-oscuro); border-top: 1px solid rgba(116,198,157,0.2); padding: 2.5rem 2rem; text-align: center; }
+    footer p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 0.4rem; }
+    footer a { color: var(--verde-claro); text-decoration: none; }
+
+    .fab { position: fixed; bottom: 1.8rem; right: 1.8rem; background: var(--acento); color: var(--blanco); font-weight: 600; font-size: 0.88rem; padding: 0.85rem 1.4rem; border-radius: 100px; text-decoration: none; box-shadow: 0 6px 20px rgba(45,106,79,0.4); display: flex; align-items: center; gap: 0.5rem; z-index: 999; transition: transform 0.2s, box-shadow 0.2s; }
+    .fab:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(45,106,79,0.5); }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .menu-btn { display: block; }
+      .fab span:last-child { display: none; }
+      .article-content { padding: 1rem 1.2rem 4rem; }
+      .compare-grid, .concept-grid { grid-template-columns: 1fr; }
+      .alert-banner { margin-left: 1.2rem; margin-right: 1.2rem; }
+    }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .article-hero-inner > * { animation: fadeUp 0.7s ease both; }
+    .article-hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
+    .article-hero-inner > *:nth-child(2) { animation-delay: 0.25s; }
+    .article-hero-inner > *:nth-child(3) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html"><img src="Logofinal.png" alt="Logo de Biología Ilustrativa"></a>
+    <button class="menu-btn" id="menu-btn">☰</button>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="index.html#sobre-mi">Sobre mí</a>
+      <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+      <a href="articulo1.html">Blog</a>
+      <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+    </nav>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Inicio</a>
+    <a href="index.html#sobre-mi">Sobre mí</a>
+    <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+    <a href="articulo1.html">Blog</a>
+    <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="hero-tag">Seguridad alimentaria · Microbiología</span>
+    <h1>Retiro de Nestlé y <em>Bacillus cereus</em>: análisis microbiológico</h1>
+    <p class="article-meta">Por Mayerlin Lemos · Biología Ilustrativa</p>
+  </div>
+</div>
+
+<!-- ALERTA CONTEXTUAL -->
+<div class="alert-banner" style="margin-left:auto;margin-right:auto;padding-left:1.5rem;padding-right:1.5rem;">
+  <span class="alert-icon">⚠️</span>
+  <p><strong>Contexto:</strong> Nestlé retiró varios lotes de leche en polvo para lactantes en más de 45 países. Este artículo analiza el caso desde la microbiología y el control de calidad alimentario, con fines exclusivamente educativos.</p>
+</div>
+
+<!-- CONTENIDO -->
+<article class="article-content">
+
+  <p class="intro">Más allá del impacto mediático, este caso nos permite analizar cómo funcionan los sistemas de control de calidad, cómo se identifican riesgos en la industria y por qué comprender la relación entre alimentos, su matriz y sus microorganismos es tan fundamental.</p>
+
+  <!-- Contexto -->
+  <h2>¿Por qué es importante analizar este caso?</h2>
+  <p>Cuando se habla de retiros de alimentos, la atención suele centrarse en la marca o en el alcance del problema. Sin embargo, <strong>desde una mirada microbiológica</strong>, estas situaciones nos permiten entender cómo se toman decisiones preventivas y por qué el análisis de riesgos es parte esencial de la seguridad alimentaria.</p>
+  <p>Este caso no debe interpretarse como una falla aislada, sino como un ejemplo de cómo la industria evalúa peligros físicos, químicos y biológicos y actúa <strong>antes de que se conviertan en un problema real para la salud pública</strong>.</p>
+
+  <!-- HACCP -->
+  <h2>El sistema HACCP y la gestión del riesgo</h2>
+  <p>Aquí es clave el sistema <strong>HACCP</strong> (Hazard Analysis and Critical Control Points), un conjunto de herramientas que permite identificar y gestionar distintos tipos de riesgos: físicos, químicos y biológicos. En este caso estamos ante un <strong>riesgo biológico</strong> asociado a microorganismos.</p>
+
+  <div class="highlight-box">
+    🔬 El proceso de fabricación de leche en polvo para lactantes <strong>no es un proceso de esterilización</strong>. La seguridad no se basa en la ausencia total de microorganismos, sino en el control y gestión de riesgos.
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card verde">
+      <h4>🧪 Pasteurización</h4>
+      <p>Aplica calor para <strong>reducir</strong> la carga microbiana, sin eliminarla completamente. Permite que ciertos microorganismos beneficiosos permanezcan (como en el yogurt).</p>
+    </div>
+    <div class="compare-card naranja">
+      <h4>🔥 Esterilización</h4>
+      <p>Implica la <strong>eliminación total</strong> de los microorganismos. Es un proceso más agresivo, no siempre aplicable en la industria alimentaria por su impacto en el producto.</p>
+    </div>
+  </div>
+
+  <p>Un aspecto clave: el posible foco de contaminación no estaría directamente en la leche, sino en <strong>un aceite incorporado durante la fabricación de la fórmula</strong>. Esto muestra cómo la teoría microbiológica tiene aplicación directa en situaciones reales.</p>
+
+  <!-- Bacillus cereus -->
+  <h2><em>Bacillus cereus</em> y la esporulación</h2>
+  <p><em>Bacillus cereus</em> es una bacteria muy interesante a nivel industrial porque tiene la capacidad de <strong>formar esporas</strong> — un mecanismo de resistencia que activa cuando enfrenta condiciones adversas:</p>
+
+  <div class="conditions-row">
+    <span class="condition-chip">🚫 Ausencia de nutrientes</span>
+    <span class="condition-chip">💧 Falta de agua</span>
+    <span class="condition-chip">⚗️ Cambios de pH</span>
+    <span class="condition-chip">🌡️ Variaciones ambientales</span>
+  </div>
+
+  <p>Durante este proceso, la síntesis de ADN y la actividad metabólica se reducen a lo esencial, permitiendo a la bacteria <strong>sobrevivir en condiciones normalmente desfavorables</strong>. Este mecanismo juega un papel clave en los procesos de contaminación alimentaria.</p>
+
+  <img src="Portada esporas.jpg" alt="Imagen de esporas de Bacillus cereus" class="article-img">
+  <p class="img-caption">Esporas de <em>Bacillus cereus</em> — estructura de resistencia altamente estable.</p>
+
+  <!-- Contaminación vs intoxicación -->
+  <h2>Contaminación vs. intoxicación: una diferencia clave</h2>
+  <p>Este caso también permite resaltar una distinción fundamental en microbiología de alimentos:</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <span class="concept-icon">🦠</span>
+      <h4>Contaminación</h4>
+      <p>Presencia directa del microorganismo en el alimento. El problema es el organismo en sí, su crecimiento y proliferación.</p>
+    </div>
+    <div class="concept-card">
+      <span class="concept-icon">☣️</span>
+      <h4>Intoxicación</h4>
+      <p>El problema es la <strong>producción de toxinas</strong>. El microorganismo puede haber sido eliminado, pero sus metabolitos secundarios permanecen en el alimento.</p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    💡 Cuando los microorganismos están en ambientes competitivos o con nutrientes limitados, pueden producir <strong>metabolitos secundarios</strong> para eliminar a su competencia. La producción de toxinas es un factor crítico dentro del análisis de riesgos alimentarios.
+  </div>
+
+  <!-- Reflexión -->
+  <h2>Reflexión como microbióloga</h2>
+  <p>La seguridad alimentaria <strong>no se basa en la ausencia absoluta de microorganismos</strong>, sino en el conocimiento profundo de los procesos, de la matriz del alimento y de los posibles riesgos asociados.</p>
+
+  <div class="closing-box">
+    <p>Este tipo de situaciones refuerzan la importancia del trabajo desde el control de calidad y el papel fundamental de los microbiólogos en la industria alimentaria. Lo que aprendemos sobre esporulación, toxinas y matrices tiene <strong>aplicación directa en el mundo real</strong>.</p>
+    <p>Algo importante: no se esperó a que ocurrieran consecuencias graves — se tomaron decisiones preventivas retirando los lotes implicados. Esto demuestra cómo un buen sistema de análisis de riesgos puede <strong>proteger la salud pública</strong>. Hablar de microbiología no es solo hablar de bacterias: es hablar de procesos, prevención y cuidado. 💚</p>
+  </div>
+
+  <p>Te invito a leer el artículo original que inspiró este análisis:</p>
+  <a href="https://elpais.com/salud-y-bienestar/2026-01-09/por-que-nestle-ha-tenido-que-retirar-leche-en-polvo-para-lactantes-en-mas-de-45-paises.html" target="_blank" class="article-link">
+    📰 Ver artículo original en El País →
+  </a>
+
+  <div class="article-tags">
+    <span class="article-tag-item">Bacillus cereus</span>
+    <span class="article-tag-item">Seguridad alimentaria</span>
+    <span class="article-tag-item">Esporulación</span>
+    <span class="article-tag-item">HACCP</span>
+    <span class="article-tag-item">Microbiología industrial</span>
+    <span class="article-tag-item">Divulgación</span>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 · <strong style="color:rgba(255,255,255,0.7)">Biología Ilustrativa</strong> · <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Mayerlin Lemos</a></p>
+  <p>Sígueme en <a href="https://www.instagram.com/biologia_ilustrativa/">Instagram</a></p>
+</footer>
+
+<a href="apoyo.html" class="fab">
+  <span>💚</span>
+  <span>Apoya el blog</span>
+</a>
+
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    menuBtn.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+  });
+</script>
+
+</body>
+</html>

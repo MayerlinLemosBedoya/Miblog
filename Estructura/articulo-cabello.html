@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Nuestro cabello alberga un ecosistema microbiano? | Biología Ilustrativa</title>
+  <link rel="icon" type="image/x-icon" href="Favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde-oscuro: #1a3d2b;
+      --verde-medio: #2d6a4f;
+      --verde-claro: #74c69d;
+      --verde-palido: #d8f3dc;
+      --verde-mint: #f0faf3;
+      --acento: #40916c;
+      --texto: #1b2d23;
+      --texto-suave: #4a6358;
+      --blanco: #ffffff;
+      --sombra: 0 4px 24px rgba(26,61,43,0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--blanco); color: var(--texto); line-height: 1.8; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--verde-palido); padding: 0.75rem 2rem; }
+    .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    header img { height: 52px; width: auto; object-fit: contain; }
+    nav { display: flex; align-items: center; gap: 2rem; }
+    nav a { font-weight: 500; font-size: 0.9rem; color: var(--verde-oscuro); text-decoration: none; letter-spacing: 0.03em; position: relative; padding-bottom: 2px; transition: color 0.2s; }
+    nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--verde-claro); transition: width 0.3s ease; }
+    nav a:hover { color: var(--acento); }
+    nav a:hover::after { width: 100%; }
+    .menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--verde-oscuro); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--verde-mint); padding: 1rem 2rem 1.5rem; gap: 1rem; border-top: 1px solid var(--verde-palido); }
+    .mobile-menu a { font-weight: 500; color: var(--verde-oscuro); text-decoration: none; font-size: 1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--verde-palido); }
+    .mobile-menu.open { display: flex; }
+
+    /* HERO */
+    .article-hero { background-color: var(--verde-oscuro); padding: 5rem 2rem 4rem; position: relative; overflow: hidden; text-align: center; }
+    .article-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Ccircle cx='80' cy='80' r='38' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.25'/%3E%3Ccircle cx='80' cy='80' r='26' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.18'/%3E%3Ccircle cx='66' cy='72' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Crect x='160' y='30' width='18' height='120' rx='9' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Cpath d='M160 50 Q178 60 160 70 Q178 80 160 90 Q178 100 160 110 Q178 120 160 130' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.22'/%3E%3Cellipse cx='400' cy='70' rx='14' ry='40' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Ccircle cx='510' cy='90' r='32' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.18'/%3E%3C/svg%3E"); background-size: 600px 600px; background-repeat: repeat; z-index: 0; }
+    .article-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,61,43,0.90) 0%, rgba(45,106,79,0.82) 60%, rgba(64,145,108,0.86) 100%); z-index: 0; }
+    .article-hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+    .hero-tag { display: inline-block; background: rgba(116,198,157,0.2); border: 1px solid rgba(116,198,157,0.4); color: var(--verde-claro); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.2rem; }
+    .article-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--blanco); line-height: 1.2; margin-bottom: 1rem; }
+    .article-hero h1 em { font-style: italic; color: var(--verde-claro); }
+    .article-meta { color: rgba(255,255,255,0.60); font-size: 0.85rem; }
+
+    /* CONTENIDO */
+    .article-content { max-width: 740px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+    .intro { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-style: italic; color: var(--texto-suave); border-left: 3px solid var(--verde-claro); padding-left: 1.2rem; margin-bottom: 2.5rem; line-height: 1.7; }
+    .article-content p { font-size: 1rem; color: var(--texto); margin-bottom: 1.4rem; line-height: 1.85; }
+    .article-content h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--verde-oscuro); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--verde-palido); }
+    .article-content strong { color: var(--verde-medio); }
+    .article-content em { font-style: italic; }
+
+    /* Microorganismos cards */
+    .microbes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+    .microbe-card { background: var(--blanco); border: 1px solid var(--verde-palido); border-radius: 14px; padding: 1.4rem; box-shadow: var(--sombra); transition: transform 0.2s, box-shadow 0.2s; }
+    .microbe-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(26,61,43,0.14); }
+    .microbe-card .mic-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+    .microbe-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--verde-oscuro); margin-bottom: 0.5rem; }
+    .microbe-card .species { font-style: italic; color: var(--acento); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .microbe-card p { font-size: 0.87rem; color: var(--texto-suave); line-height: 1.6; margin: 0; }
+
+    /* Enfermedades */
+    .disease-list { display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0; }
+    .disease-item { display: grid; grid-template-columns: 48px 1fr; gap: 1rem; align-items: start; background: var(--blanco); border: 1px solid var(--verde-palido); border-radius: 12px; padding: 1.2rem; box-shadow: var(--sombra); }
+    .disease-icon { width: 48px; height: 48px; background: var(--verde-mint); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+    .disease-body h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--verde-oscuro); margin-bottom: 0.4rem; }
+    .disease-body p { font-size: 0.9rem; color: var(--texto-suave); line-height: 1.7; margin: 0; }
+    .disease-body strong { color: var(--verde-medio); }
+
+    /* Highlight y quote */
+    .highlight-box { background: var(--verde-mint); border: 1px solid var(--verde-palido); border-left: 4px solid var(--verde-claro); border-radius: 12px; padding: 1.5rem 1.8rem; margin: 1.5rem 0; font-size: 0.97rem; color: var(--texto-suave); line-height: 1.8; }
+    .highlight-box strong { color: var(--verde-oscuro); }
+    .quote { background: var(--verde-mint); border-left: 4px solid var(--verde-claro); border-radius: 0 12px 12px 0; padding: 1.2rem 1.5rem; margin: 1.5rem 0; font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; color: var(--verde-oscuro); }
+
+    /* Consejos */
+    .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .tip-card { background: var(--verde-mint); border: 1px solid var(--verde-palido); border-radius: 12px; padding: 1.2rem; text-align: center; }
+    .tip-card .tip-icon { font-size: 1.6rem; margin-bottom: 0.5rem; display: block; }
+    .tip-card p { font-size: 0.87rem; color: var(--texto-suave); line-height: 1.6; margin: 0; }
+
+    /* Referencias */
+    .refs-wrap { background: var(--verde-mint); border: 1px solid var(--verde-palido); border-radius: 14px; padding: 1.5rem 1.8rem; margin: 2rem 0; }
+    .refs-wrap h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--verde-oscuro); margin-bottom: 1rem; }
+    .ref-item { display: flex; gap: 0.8rem; padding: 0.8rem 0; border-bottom: 1px solid var(--verde-palido); }
+    .ref-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .ref-item span { color: var(--acento); font-size: 1rem; flex-shrink: 0; }
+    .ref-item p { font-size: 0.87rem; color: var(--texto-suave); line-height: 1.6; margin: 0; }
+    .ref-item strong { color: var(--verde-oscuro); }
+
+    /* Cierre */
+    .article-closing { background: var(--verde-oscuro); border-radius: 16px; padding: 2.5rem; margin: 3rem 0 2rem; }
+    .article-closing p { color: rgba(255,255,255,0.80); font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
+    .article-closing p:last-child { margin: 0; }
+    .article-closing strong { color: var(--verde-claro); }
+
+    .article-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-top: 2rem; border-top: 1px solid var(--verde-palido); }
+    .article-tag-item { background: var(--verde-mint); border: 1px solid var(--verde-palido); color: var(--acento); font-size: 0.78rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 100px; }
+
+    /* Footer */
+    footer { background: var(--verde-oscuro); border-top: 1px solid rgba(116,198,157,0.2); padding: 2.5rem 2rem; text-align: center; }
+    footer p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 0.4rem; }
+    footer a { color: var(--verde-claro); text-decoration: none; }
+
+    .fab { position: fixed; bottom: 1.8rem; right: 1.8rem; background: var(--acento); color: var(--blanco); font-weight: 600; font-size: 0.88rem; padding: 0.85rem 1.4rem; border-radius: 100px; text-decoration: none; box-shadow: 0 6px 20px rgba(45,106,79,0.4); display: flex; align-items: center; gap: 0.5rem; z-index: 999; transition: transform 0.2s, box-shadow 0.2s; }
+    .fab:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(45,106,79,0.5); }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .menu-btn { display: block; }
+      .fab span:last-child { display: none; }
+      .article-content { padding: 3rem 1.2rem 4rem; }
+      .microbes-grid { grid-template-columns: 1fr; }
+      .tips-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .article-hero-inner > * { animation: fadeUp 0.7s ease both; }
+    .article-hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
+    .article-hero-inner > *:nth-child(2) { animation-delay: 0.25s; }
+    .article-hero-inner > *:nth-child(3) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html"><img src="Logofinal.png" alt="Logo de Biología Ilustrativa"></a>
+    <button class="menu-btn" id="menu-btn">☰</button>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="index.html#sobre-mi">Sobre mí</a>
+      <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+      <a href="articulo1.html">Blog</a>
+      <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+    </nav>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Inicio</a>
+    <a href="index.html#sobre-mi">Sobre mí</a>
+    <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+    <a href="articulo1.html">Blog</a>
+    <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="hero-tag">Microbioma · Salud · Divulgación</span>
+    <h1>¿En nuestro cabello habita un <em>ecosistema microbiano</em>?</h1>
+    <p class="article-meta">Por Mayerlin Lemos · 18 de diciembre de 2025</p>
+  </div>
+</div>
+
+<!-- CONTENIDO -->
+<article class="article-content">
+
+  <p class="intro">Si el cuero cabelludo es piel viva, rica en lípidos, humedad y nutrientes... ¿podría ser también el hogar de un ecosistema microbiano complejo? La respuesta es sí.</p>
+
+  <!-- 1. Qué es el cabello -->
+  <h2>¿Qué es realmente el cabello?</h2>
+  <p>Desde una perspectiva estética, el cabello aporta armonía a nuestro rostro. Desde un contexto social, en comunidades afrodescendientes ha sido símbolo de identidad y resistencia. Pero desde la ciencia, el cabello es una <strong>estructura filamentosa compuesta principalmente de queratina</strong>, que crece a partir de la piel del cuero cabelludo.</p>
+
+  <div class="highlight-box">
+    El cabello está formado por una <strong>raíz</strong> (dentro del folículo piloso) y un <strong>tallo</strong> (la porción visible). Además de su función estética, cumple roles biológicos: protección frente a la radiación solar, regulación térmica y protección sensorial.
+  </div>
+
+  <!-- 2. Microbiota capilar -->
+  <h2>La microbiota capilar</h2>
+  <p>Nuestro cuero cabelludo alberga una comunidad diversa de microorganismos que conforman el <strong>microbioma capilar</strong>. Su presencia y abundancia están estrechamente relacionadas con las condiciones fisicoquímicas de esta zona: producción de sebo, humedad y pH.</p>
+
+  <div class="microbes-grid">
+    <div class="microbe-card">
+      <span class="mic-icon">🍄</span>
+      <h4>Hongos</h4>
+      <p class="species">Malassezia sp.</p>
+      <p>Levaduras lipofílicas predominantes del cuero cabelludo. Utilizan los lípidos del sebo como fuente de carbono. En equilibrio conviven sin problema, pero su exceso puede generar inflamación.</p>
+    </div>
+    <div class="microbe-card">
+      <span class="mic-icon">🦠</span>
+      <h4>Bacterias</h4>
+      <p class="species">Cutibacterium sp. · Staphylococcus sp.</p>
+      <p><em>Cutibacterium</em> participa en el metabolismo lipídico cutáneo. <em>Staphylococcus</em> incluye especies comensales como <em>S. epidermidis</em> y otras potencialmente patógenas.</p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    💡 Los microorganismos responden constantemente a la <strong>presión selectiva del entorno</strong>. Factores como la salud general, el sistema inmune y los hábitos de higiene influyen directamente en el equilibrio del microbioma capilar.
+  </div>
+
+  <!-- 3. Enfermedades -->
+  <h2>Cuando se rompe el equilibrio</h2>
+  <p>Problemas como la caspa, la dermatitis seborreica o la irritación surgen cuando se rompe el equilibrio del microbioma capilar.</p>
+
+  <div class="disease-list">
+    <div class="disease-item">
+      <div class="disease-icon">❄️</div>
+      <div class="disease-body">
+        <h4>Caspa</h4>
+        <p>Descamación fina con picazón. Asociada con exceso de <strong><em>Malassezia</em></strong>, que metaboliza los lípidos del sebo y produce compuestos irritantes para la piel.</p>
+      </div>
+    </div>
+    <div class="disease-item">
+      <div class="disease-icon">🔴</div>
+      <div class="disease-body">
+        <h4>Dermatitis seborreica</h4>
+        <p>Inflamación más intensa con enrojecimiento, escamas gruesas y lesiones aceitosas. La interacción entre hongos y bacterias puede agravar esta condición.</p>
+      </div>
+    </div>
+    <div class="disease-item">
+      <div class="disease-icon">⚡</div>
+      <div class="disease-body">
+        <h4>Irritación o dermatitis de contacto</h4>
+        <p>Causada por productos agresivos, cambios bruscos de higiene, estrés o alteraciones en la barrera cutánea, que permiten que microorganismos inofensivos se vuelvan problemáticos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Estrés -->
+  <h2>El papel del estrés y el entorno</h2>
+  <p>En las últimas décadas se ha notado un aumento de enfermedades capilares, despertando interés en medicina, dermatología, psicología y ciencias ambientales. El estrés del siglo XXI — altos estándares de vida, sobrecarga laboral, violencia — tiene un impacto directo.</p>
+
+  <div class="quote">El estrés puede alterar la respuesta inmune y la composición del microbioma, favoreciendo procesos inflamatorios que se reflejan en síntomas visibles como descamación, picazón y enrojecimiento.</div>
+
+  <!-- 5. Consejos -->
+  <h2>¿Cómo recuperar el equilibrio?</h2>
+  <p>La respuesta está en el <strong>cuidado consciente del cabello y el cuero cabelludo</strong>:</p>
+
+  <div class="tips-grid">
+    <div class="tip-card">
+      <span class="tip-icon">🧴</span>
+      <p>Usar productos que respeten la microbiota natural</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">🚿</span>
+      <p>Higiene adecuada sin excederse en frecuencia</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">🥗</span>
+      <p>Alimentación equilibrada y bienestar general</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-icon">🧘</span>
+      <p>Control del estrés y hábitos de vida saludables</p>
+    </div>
+  </div>
+
+  <!-- Referencias -->
+  <div class="refs-wrap">
+    <h3>📚 Referencias para investigar</h3>
+    <div class="ref-item">
+      <span>📄</span>
+      <p><strong>Scalp microbiome: a guide to better understanding scalp diseases and treatments</strong> — Revisión que explora cómo el desequilibrio del microbioma está relacionado con caspa, dermatitis seborreica y psoriasis. PubMed.</p>
+    </div>
+    <div class="ref-item">
+      <span>📄</span>
+      <p><strong>Comparison of Healthy and Dandruff Scalp Microbiome Reveals the Role of Commensals in Scalp Health</strong> — Estudio comparativo entre microbiomas de cuero cabelludo sano y con caspa. Frontiers.</p>
+    </div>
+  </div>
+
+  <!-- Cierre -->
+  <div class="article-closing">
+    <p>Nuestro cabello alberga un <strong>ecosistema microbiano amplio y complejo</strong> que, al igual que nuestra salud física, debemos cuidar. Un desbalance puede traer consecuencias desde irritación hasta enfermedades crónicas del cuero cabelludo.</p>
+    <p>Mi invitación es a mirar nuestro cabello y cuero cabelludo con la misma atención que damos a nuestra salud general. <strong>Protejamos este ecosistema vivo que nos acompaña cada día.</strong> 💚</p>
+  </div>
+
+  <div class="article-tags">
+    <span class="article-tag-item">Microbioma capilar</span>
+    <span class="article-tag-item">Malassezia</span>
+    <span class="article-tag-item">Salud cutánea</span>
+    <span class="article-tag-item">Microbiología</span>
+    <span class="article-tag-item">Dermatología</span>
+    <span class="article-tag-item">Divulgación</span>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 · <strong style="color:rgba(255,255,255,0.7)">Biología Ilustrativa</strong> · <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Mayerlin Lemos</a></p>
+  <p>Sígueme en <a href="https://www.instagram.com/biologia_ilustrativa/">Instagram</a></p>
+</footer>
+
+<a href="apoyo.html" class="fab">
+  <span>💚</span>
+  <span>Apoya el blog</span>
+</a>
+
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    menuBtn.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+  });
+</script>
+
+</body>
+</html>

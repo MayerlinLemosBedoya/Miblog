@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Los hongos filamentosos: habitantes de nuestros alimentos | Biología Ilustrativa</title>
+  <link rel="icon" type="image/png" href="Favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde-oscuro: #1a3d2b;
+      --verde-medio: #2d6a4f;
+      --verde-claro: #74c69d;
+      --verde-palido: #d8f3dc;
+      --verde-mint: #f0faf3;
+      --acento: #40916c;
+      --texto: #1b2d23;
+      --texto-suave: #4a6358;
+      --blanco: #ffffff;
+      --sombra: 0 4px 24px rgba(26,61,43,0.10);
+      --sombra-hover: 0 8px 36px rgba(26,61,43,0.18);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--blanco); color: var(--texto); line-height: 1.8; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--verde-palido); padding: 0.75rem 2rem; }
+    .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    header img { height: 52px; width: auto; object-fit: contain; }
+    nav { display: flex; align-items: center; gap: 2rem; }
+    nav a { font-weight: 500; font-size: 0.9rem; color: var(--verde-oscuro); text-decoration: none; letter-spacing: 0.03em; position: relative; padding-bottom: 2px; transition: color 0.2s; }
+    nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--verde-claro); transition: width 0.3s ease; }
+    nav a:hover { color: var(--acento); }
+    nav a:hover::after { width: 100%; }
+    .menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--verde-oscuro); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--verde-mint); padding: 1rem 2rem 1.5rem; gap: 1rem; border-top: 1px solid var(--verde-palido); }
+    .mobile-menu a { font-weight: 500; color: var(--verde-oscuro); text-decoration: none; font-size: 1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--verde-palido); }
+    .mobile-menu.open { display: flex; }
+
+    /* HERO */
+    .article-hero { background-color: var(--verde-oscuro); padding: 5rem 2rem 4rem; position: relative; overflow: hidden; text-align: center; }
+    .article-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Ccircle cx='80' cy='80' r='38' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.25'/%3E%3Ccircle cx='80' cy='80' r='26' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.18'/%3E%3Ccircle cx='66' cy='72' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Crect x='160' y='30' width='18' height='120' rx='9' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Cpath d='M160 50 Q178 60 160 70 Q178 80 160 90 Q178 100 160 110 Q178 120 160 130' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.22'/%3E%3Cellipse cx='400' cy='70' rx='14' ry='40' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Ccircle cx='510' cy='90' r='32' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.18'/%3E%3C/svg%3E"); background-size: 600px 600px; background-repeat: repeat; z-index: 0; }
+    .article-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,61,43,0.90) 0%, rgba(45,106,79,0.82) 60%, rgba(64,145,108,0.86) 100%); z-index: 0; }
+    .article-hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+    .hero-tag { display: inline-block; background: rgba(116,198,157,0.2); border: 1px solid rgba(116,198,157,0.4); color: var(--verde-claro); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.2rem; }
+    .article-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--blanco); line-height: 1.2; margin-bottom: 1rem; }
+    .article-hero h1 em { font-style: italic; color: var(--verde-claro); }
+    .article-meta { color: rgba(255,255,255,0.60); font-size: 0.85rem; }
+
+    /* INTRO */
+    .intro-wrap { max-width: 740px; margin: 0 auto; padding: 3rem 1.5rem 1rem; }
+    .intro-wrap p { font-size: 1rem; color: var(--texto-suave); margin-bottom: 1rem; line-height: 1.85; }
+    .intro-wrap .lead { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-style: italic; color: var(--texto-suave); border-left: 3px solid var(--verde-claro); padding-left: 1.2rem; margin-bottom: 1.5rem; line-height: 1.7; }
+
+    /* CONTENIDO */
+    .article-content { max-width: 740px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+    .article-content h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--verde-oscuro); margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--verde-palido); }
+    .article-content p { font-size: 1rem; color: var(--texto); margin-bottom: 1.4rem; line-height: 1.85; }
+    .article-content strong { color: var(--verde-medio); }
+    .article-content em { font-style: italic; }
+    .article-content ul { list-style: none; padding: 0 0 1.5rem 0; }
+    .article-content ul li { font-size: 0.95rem; color: var(--texto-suave); padding: 0.5rem 0 0.5rem 1.8rem; position: relative; }
+    .article-content ul li::before { content: '→'; position: absolute; left: 0; color: var(--verde-claro); font-weight: 600; }
+
+    /* Figuras */
+    .figure-wrap { margin: 2.5rem 0; text-align: center; }
+    .figure-wrap img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: var(--sombra); margin-bottom: 1rem; }
+    .figure-caption { font-size: 0.9rem; color: var(--texto-suave); line-height: 1.6; }
+    .figure-caption strong { color: var(--verde-oscuro); }
+
+    /* Highlight box */
+    .highlight-box { background: var(--verde-mint); border-left: 4px solid var(--verde-claro); border-radius: 0 12px 12px 0; padding: 1.5rem; margin: 2rem 0; font-size: 0.97rem; color: var(--texto-suave); line-height: 1.8; }
+    .highlight-box strong { color: var(--verde-oscuro); }
+
+    /* REFLEXIÓN FINAL */
+    .reflection-wrap { max-width: 740px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+    .reflection-box { background: var(--verde-oscuro); border-radius: 16px; padding: 2.5rem; text-align: center; }
+    .reflection-box h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--verde-claro); margin-bottom: 1.2rem; border: none; padding: 0; }
+    .reflection-box p { color: rgba(255,255,255,0.80); font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
+    .reflection-box p:last-child { margin: 0; }
+    .reflection-box strong { color: var(--verde-claro); }
+
+    .article-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(116,198,157,0.2); justify-content: center; }
+    .article-tag-item { background: rgba(116,198,157,0.15); border: 1px solid rgba(116,198,157,0.3); color: var(--verde-claro); font-size: 0.78rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 100px; }
+
+    /* Footer */
+    footer { background: var(--verde-oscuro); border-top: 1px solid rgba(116,198,157,0.2); padding: 2.5rem 2rem; text-align: center; }
+    footer p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 0.4rem; }
+    footer a { color: var(--verde-claro); text-decoration: none; }
+
+    .fab { position: fixed; bottom: 1.8rem; right: 1.8rem; background: var(--acento); color: var(--blanco); font-weight: 600; font-size: 0.88rem; padding: 0.85rem 1.4rem; border-radius: 100px; text-decoration: none; box-shadow: 0 6px 20px rgba(45,106,79,0.4); display: flex; align-items: center; gap: 0.5rem; z-index: 999; transition: transform 0.2s, box-shadow 0.2s; }
+    .fab:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(45,106,79,0.5); }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .menu-btn { display: block; }
+      .fab span:last-child { display: none; }
+      .intro-wrap, .article-content, .reflection-wrap { padding-left: 1.2rem; padding-right: 1.2rem; }
+    }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .article-hero-inner > * { animation: fadeUp 0.7s ease both; }
+    .article-hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
+    .article-hero-inner > *:nth-child(2) { animation-delay: 0.25s; }
+    .article-hero-inner > *:nth-child(3) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html"><img src="Logofinal.png" alt="Logo de Biología Ilustrativa"></a>
+    <button class="menu-btn" id="menu-btn">☰</button>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="index.html#sobre-mi">Sobre mí</a>
+      <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+      <a href="articulo1.html">Blog</a>
+      <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+    </nav>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Inicio</a>
+    <a href="index.html#sobre-mi">Sobre mí</a>
+    <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+    <a href="articulo1.html">Blog</a>
+    <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="hero-tag">Microbiología · Alimentos</span>
+    <h1>Los hongos <em>filamentosos</em>: habitantes de nuestros alimentos</h1>
+    <p class="article-meta">Por Mayerlin Lemos · 4 de febrero de 2026</p>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="intro-wrap">
+  <p class="lead">En nuestra vida cotidiana es común observar que, al dejar por varios días alimentos como pan, arroz, arepas o vegetales, aparece lo que llamamos "moho". Aunque suele verse como algo superficial, este fenómeno está relacionado con organismos con gran impacto en distintos ámbitos de la sociedad.</p>
+  <p>Estos hongos influyen no solo en la conservación de los alimentos, sino también en la economía, el ambiente y la salud humana. A partir de esta experiencia cotidiana, exploraremos qué son, cómo crecen y por qué es importante comprenderlos.</p>
+</div>
+
+<!-- CONTENIDO -->
+<article class="article-content">
+
+  <h2>¿Qué son los hongos filamentosos?</h2>
+  <p>Lo que comúnmente llamamos "moho" corresponde a un grupo de organismos conocidos como <strong>hongos filamentosos</strong>. Se caracterizan por estar formados por estructuras microscópicas llamadas <strong>hifas</strong>, que al unirse forman una red conocida como <strong>micelio</strong>.</p>
+  <p>El micelio se extiende dentro del alimento o del sustrato, funcionando como un sistema de absorción de nutrientes, similar a una red de raíces.</p>
+  
+  <p>Por esta razón, cuando se observa un alimento contaminado y se elimina solo la parte visible, el hongo no desaparece completamente:</p>
+  <ul>
+    <li>Gran parte de su estructura permanece en el interior</li>
+    <li>Pueden quedar esporas (su forma de dispersión)</li>
+    <li>Y pueden estar presentes sustancias tóxicas</li>
+  </ul>
+
+  <div class="figure-wrap">
+    <img src="Aspergillus infografia final copia.png" alt="Ilustración de Aspergillus spp">
+    <div class="figure-caption"><strong>Figura 1.</strong> Ilustración de <em>Aspergillus</em> spp. mostrando su estructura filamentosa</div>
+  </div>
+
+  <div class="figure-wrap">
+    <img src="Penicillium.png" alt="Ilustración de Penicillium spp">
+    <div class="figure-caption"><strong>Figura 2.</strong> Ilustración de <em>Penicillium</em> spp. y su micelio</div>
+  </div>
+
+  <h2>¿Cómo crecen los hongos?</h2>
+  <p>Al igual que otros microorganismos, los hongos presentan distintas etapas de crecimiento que dependen de factores como <strong>temperatura, pH, cantidad de nutrientes</strong> y tipo de alimento o sustrato.</p>
+  <p>De forma general, este crecimiento se describe en cuatro fases:</p>
+  <ul>
+    <li>Fase de latencia</li>
+    <li>Crecimiento rápido (exponencial)</li>
+    <li>Fase estacionaria</li>
+    <li>Fase de muerte celular</li>
+  </ul>
+
+  <div class="figure-wrap">
+    <img src="Curva de crecimiento de MO.png" alt="Curva de crecimiento de hongos">
+    <div class="figure-caption"><strong>Figura 3.</strong> Curva de crecimiento microbiano con sus cuatro fases principales</div>
+  </div>
+
+  <h2>Sustancias que producen los hongos</h2>
+  <p>Durante su crecimiento, los hongos producen diferentes compuestos llamados <strong>metabolitos</strong>. Algunos de ellos son útiles para la industria:</p>
+  <ul>
+    <li>Alcoholes empleados en fermentación</li>
+    <li>Ácidos orgánicos usados en alimentos y cosméticos</li>
+    <li>Otros compuestos aprovechados en procesos biotecnológicos</li>
+  </ul>
+
+  <p>Un ejemplo importante es el <strong>ácido cítrico</strong>, producido por <em>Aspergillus niger</em>, ampliamente utilizado en la industria alimentaria y farmacéutica.</p>
+
+  <p>Sin embargo, los hongos también pueden producir sustancias que cumplen funciones de defensa o competencia con otros microorganismos, entre ellas los <strong>antibióticos y las micotoxinas</strong>.</p>
+
+  <h2>Micotoxinas: un riesgo invisible</h2>
+  <p>Las <strong>micotoxinas</strong> son compuestos tóxicos producidos por algunos hongos filamentosos. Pueden encontrarse en alimentos como cereales, frutos secos, frutas deshidratadas y especias.</p>
+  <p>Su crecimiento puede ocurrir:</p>
+  <ul>
+    <li>Antes de la cosecha</li>
+    <li>Durante el almacenamiento</li>
+    <li>Directamente en el alimento, especialmente en ambientes cálidos y húmedos</li>
+  </ul>
+
+  <div class="highlight-box">
+    <strong>⚠️ Aspecto preocupante:</strong> Muchas micotoxinas no se eliminan fácilmente con el calor ni con el procesamiento, lo que representa un riesgo significativo para la salud humana y requiere medidas preventivas desde la producción hasta el almacenamiento.
+  </div>
+
+  <div class="figure-wrap">
+    <img src="Intoxicacion.png" alt="Representación de intoxicación por micotoxinas">
+    <div class="figure-caption"><strong>Figura 4.</strong> Efectos de la intoxicación por micotoxinas en la salud</div>
+  </div>
+
+  <h2>Hongos y resistencia a los antifúngicos</h2>
+  <p>En la actualidad, al igual que ocurre con las bacterias, el uso excesivo de antifúngicos ha favorecido la aparición de <strong>hongos resistentes</strong>.</p>
+  <p>Según la Fundación de Acción Global para las Infecciones Fúngicas (GAFFI), un número reducido de especies causa la mayoría de las infecciones fúngicas humanas, y estas infecciones representan un importante problema de salud pública.</p>
+  <p>Los hongos pueden desarrollar resistencia mediante distintos mecanismos:</p>
+  <ul>
+    <li>Cambios en sus estructuras celulares</li>
+    <li>Expulsión de los fármacos</li>
+    <li>Formación de comunidades que los protegen</li>
+  </ul>
+
+  <p>Esto dificulta su tratamiento y refuerza la necesidad de un <strong>uso responsable de los antifúngicos</strong>.</p>
+
+</article>
+
+<!-- REFLEXIÓN FINAL -->
+<div class="reflection-wrap">
+  <div class="reflection-box">
+    <h2>Reflexión final</h2>
+    <p>Los hongos filamentosos no son solo el moho visible en los alimentos. Son organismos con una biología compleja, capaces de colonizar ambientes, producir sustancias útiles para la industria, generar toxinas que afectan la salud y adaptarse a los tratamientos antifúngicos.</p>
+    <p>Comprender su funcionamiento nos permite:</p>
+    <p style="margin: 1rem 0;">
+      <strong style="color: var(--verde-claro);">✓</strong> Mejorar la conservación de los alimentos<br>
+      <strong style="color: var(--verde-claro);">✓</strong> Reducir riesgos para la salud<br>
+      <strong style="color: var(--verde-claro);">✓</strong> Valorar su impacto ambiental y social
+    </p>
+    <div class="article-tags">
+      <span class="article-tag-item">Hongos</span>
+      <span class="article-tag-item">Microbiología</span>
+      <span class="article-tag-item">Alimentos</span>
+      <span class="article-tag-item">Salud pública</span>
+      <span class="article-tag-item">Micotoxinas</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 · <strong style="color:rgba(255,255,255,0.7)">Biología Ilustrativa</strong> · <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Mayerlin Lemos</a></p>
+  <p>Sígueme en <a href="https://www.instagram.com/biologia_ilustrativa/">Instagram</a></p>
+</footer>
+
+<a href="apoyo.html" class="fab">
+  <span>💚</span>
+  <span>Apoya el blog</span>
+</a>
+
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    menuBtn.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+  });
+</script>
+
+</body>
+</html>

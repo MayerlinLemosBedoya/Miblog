@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reseña: Las diatomeas y los bosques invisibles del océano | Biología Ilustrativa</title>
+  <link rel="icon" type="image/png" href="Favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde-oscuro: #1a3d2b;
+      --verde-medio: #2d6a4f;
+      --verde-claro: #74c69d;
+      --verde-palido: #d8f3dc;
+      --verde-mint: #f0faf3;
+      --acento: #40916c;
+      --texto: #1b2d23;
+      --texto-suave: #4a6358;
+      --blanco: #ffffff;
+      --sombra: 0 4px 24px rgba(26,61,43,0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--blanco); color: var(--texto); line-height: 1.8; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--verde-palido); padding: 0.75rem 2rem; }
+    .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    header img { height: 52px; width: auto; object-fit: contain; }
+    nav { display: flex; align-items: center; gap: 2rem; }
+    nav a { font-weight: 500; font-size: 0.9rem; color: var(--verde-oscuro); text-decoration: none; letter-spacing: 0.03em; position: relative; padding-bottom: 2px; transition: color 0.2s; }
+    nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--verde-claro); transition: width 0.3s ease; }
+    nav a:hover { color: var(--acento); }
+    nav a:hover::after { width: 100%; }
+    .menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--verde-oscuro); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--verde-mint); padding: 1rem 2rem 1.5rem; gap: 1rem; border-top: 1px solid var(--verde-palido); }
+    .mobile-menu a { font-weight: 500; color: var(--verde-oscuro); text-decoration: none; font-size: 1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--verde-palido); }
+    .mobile-menu.open { display: flex; }
+
+    /* HERO */
+    .article-hero { background-color: var(--verde-oscuro); padding: 5rem 2rem 4rem; position: relative; overflow: hidden; text-align: center; }
+    .article-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Ccircle cx='80' cy='80' r='38' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.25'/%3E%3Ccircle cx='80' cy='80' r='26' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.18'/%3E%3Ccircle cx='66' cy='72' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Ccircle cx='82' cy='65' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Crect x='160' y='30' width='18' height='120' rx='9' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Cpath d='M160 50 Q178 60 160 70 Q178 80 160 90 Q178 100 160 110 Q178 120 160 130' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.22'/%3E%3Cellipse cx='400' cy='70' rx='14' ry='40' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Ccircle cx='510' cy='90' r='32' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.18'/%3E%3C/svg%3E"); background-size: 600px 600px; background-repeat: repeat; z-index: 0; }
+    .article-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,61,43,0.90) 0%, rgba(45,106,79,0.82) 60%, rgba(64,145,108,0.86) 100%); z-index: 0; }
+    .article-hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+    .hero-tag { display: inline-block; background: rgba(116,198,157,0.2); border: 1px solid rgba(116,198,157,0.4); color: var(--verde-claro); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.2rem; }
+    .article-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--blanco); line-height: 1.2; margin-bottom: 1rem; }
+    .article-hero h1 em { font-style: italic; color: var(--verde-claro); }
+    .article-meta { color: rgba(255,255,255,0.60); font-size: 0.85rem; }
+
+    /* FICHA DEL LIBRO */
+    .book-card-wrap { max-width: 740px; margin: -2rem auto 0; padding: 0 1.5rem; position: relative; z-index: 2; }
+    .book-card { background: var(--blanco); border-radius: 16px; box-shadow: 0 8px 36px rgba(26,61,43,0.16); border: 1px solid var(--verde-palido); display: grid; grid-template-columns: 200px 1fr; overflow: hidden; }
+    .book-cover { background: var(--verde-mint); display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+    .book-cover img { width: 100%; max-width: 160px; border-radius: 8px; box-shadow: 0 4px 16px rgba(26,61,43,0.20); object-fit: cover; }
+    .book-info { padding: 2rem; }
+    .book-info h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--verde-oscuro); margin-bottom: 0.4rem; line-height: 1.3; }
+    .book-info .author { font-size: 0.9rem; color: var(--texto-suave); font-style: italic; margin-bottom: 1.2rem; }
+    .book-meta { display: flex; flex-direction: column; gap: 0.4rem; }
+    .book-meta-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--texto-suave); }
+    .book-meta-item span:first-child { color: var(--acento); font-size: 1rem; }
+    .rating { display: flex; gap: 0.2rem; margin-top: 1rem; }
+    .star { color: #f4a226; font-size: 1.2rem; }
+
+    /* CONTENIDO */
+    .article-content { max-width: 740px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+    .intro { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-style: italic; color: var(--texto-suave); border-left: 3px solid var(--verde-claro); padding-left: 1.2rem; margin-bottom: 2.5rem; line-height: 1.7; }
+    .article-content p { font-size: 1rem; color: var(--texto); margin-bottom: 1.4rem; line-height: 1.85; }
+    .article-content h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--verde-oscuro); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--verde-palido); }
+    .article-content strong { color: var(--verde-medio); }
+    .article-content em { font-style: italic; }
+
+    /* Highlights */
+    .highlight-box { background: var(--verde-mint); border: 1px solid var(--verde-palido); border-left: 4px solid var(--verde-claro); border-radius: 12px; padding: 1.5rem 1.8rem; margin: 1.5rem 0; font-size: 0.97rem; color: var(--texto-suave); line-height: 1.8; }
+    .highlight-box strong { color: var(--verde-oscuro); }
+
+    /* Lo mejor / lo mejorable */
+    .pros-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+    .pro-card { border-radius: 12px; padding: 1.3rem; border: 1px solid var(--verde-palido); }
+    .pro-card.positive { background: var(--verde-mint); }
+    .pro-card.neutral { background: #fff8f0; border-color: #fcd9a0; }
+    .pro-card h4 { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; }
+    .pro-card.positive h4 { color: var(--verde-oscuro); }
+    .pro-card.neutral h4 { color: #7a4500; }
+    .pro-card ul { list-style: none; padding: 0; }
+    .pro-card ul li { font-size: 0.88rem; padding: 0.3rem 0 0.3rem 1.4rem; position: relative; color: var(--texto-suave); }
+    .pro-card.positive ul li::before { content: '✓'; position: absolute; left: 0; color: var(--acento); font-weight: 700; }
+    .pro-card.neutral ul li::before { content: '·'; position: absolute; left: 0; color: #f4a226; font-size: 1.3rem; line-height: 1; top: 0.2rem; }
+
+    /* Recomendación final */
+    .recommendation { background: var(--verde-oscuro); border-radius: 16px; padding: 2.5rem; margin: 3rem 0 2rem; text-align: center; }
+    .recommendation .rec-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .recommendation h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--verde-claro); margin-bottom: 1rem; }
+    .recommendation p { color: rgba(255,255,255,0.80); font-size: 1rem; line-height: 1.7; margin: 0; }
+    .recommendation strong { color: var(--verde-claro); }
+
+    .article-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-top: 2rem; border-top: 1px solid var(--verde-palido); }
+    .article-tag-item { background: var(--verde-mint); border: 1px solid var(--verde-palido); color: var(--acento); font-size: 0.78rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 100px; }
+
+    /* Footer */
+    footer { background: var(--verde-oscuro); border-top: 1px solid rgba(116,198,157,0.2); padding: 2.5rem 2rem; text-align: center; }
+    footer p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 0.4rem; }
+    footer a { color: var(--verde-claro); text-decoration: none; }
+
+    .fab { position: fixed; bottom: 1.8rem; right: 1.8rem; background: var(--acento); color: var(--blanco); font-weight: 600; font-size: 0.88rem; padding: 0.85rem 1.4rem; border-radius: 100px; text-decoration: none; box-shadow: 0 6px 20px rgba(45,106,79,0.4); display: flex; align-items: center; gap: 0.5rem; z-index: 999; transition: transform 0.2s, box-shadow 0.2s; }
+    .fab:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(45,106,79,0.5); }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .menu-btn { display: block; }
+      .fab span:last-child { display: none; }
+      .book-card { grid-template-columns: 1fr; }
+      .book-cover { padding: 1.5rem; }
+      .book-cover img { max-width: 120px; }
+      .pros-grid { grid-template-columns: 1fr; }
+      .article-content { padding: 3rem 1.2rem 4rem; }
+    }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .article-hero-inner > * { animation: fadeUp 0.7s ease both; }
+    .article-hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
+    .article-hero-inner > *:nth-child(2) { animation-delay: 0.25s; }
+    .article-hero-inner > *:nth-child(3) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html"><img src="Logofinal.png" alt="Logo de Biología Ilustrativa"></a>
+    <button class="menu-btn" id="menu-btn">☰</button>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="index.html#sobre-mi">Sobre mí</a>
+      <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+      <a href="articulo1.html">Blog</a>
+      <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+    </nav>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Inicio</a>
+    <a href="index.html#sobre-mi">Sobre mí</a>
+    <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+    <a href="articulo1.html">Blog</a>
+    <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="hero-tag">Reseña de libro · Divulgación científica</span>
+    <h1>Las diatomeas y los <em>bosques invisibles</em> del océano</h1>
+    <p class="article-meta">Por Mayerlin Lemos · Biología Ilustrativa</p>
+  </div>
+</div>
+
+<!-- FICHA DEL LIBRO -->
+<div class="book-card-wrap">
+  <div class="book-card">
+    <div class="book-cover">
+      <img src="Portada diatomeas.png" alt="Portada Las diatomeas y los bosques invisibles del océano">
+    </div>
+    <div class="book-info">
+      <h2>Las diatomeas y los bosques invisibles del océano</h2>
+      <p class="author">Pedro Cermeno Aínsa</p>
+      <div class="book-meta">
+        <div class="book-meta-item"><span>🏛️</span> Catarata / CSIC</div>
+        <div class="book-meta-item"><span>📄</span> ~76 páginas · Incluye glosario</div>
+        <div class="book-meta-item"><span>🔬</span> Divulgación científica · Oceanografía</div>
+      </div>
+      <div class="rating">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star" style="opacity:0.3">★</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENIDO -->
+<article class="article-content">
+
+  <p class="intro">Este libro me llamó la atención desde el primer momento por su portada: una imagen real obtenida al microscopio con distintas especies de diatomeas. Una invitación directa a mirar el mundo microscópico.</p>
+
+  <p>Me pareció una invitación directa a conocer a estos organismos que no suelen ser protagonistas en los libros, a pesar de ser muy antiguos y de tener un papel fundamental dentro del ecosistema acuático como parte del fitoplancton.</p>
+
+  <div class="highlight-box">
+    💡 Incluso en divulgación científica es poco común encontrar material dedicado a las diatomeas. Una persona comentó en uno de mis videos que <strong>casi no existe información accesible sobre estos organismos</strong>. Sentí que el libro respondía a esa misma necesidad: <strong>hacer visible lo invisible</strong>.
+  </div>
+
+  <p>El libro está bien organizado y, aunque es breve, la mayor parte está dedicada al desarrollo de los capítulos. Incluye un <strong>glosario</strong> que permite comprender términos técnicos sin perderse en el lenguaje científico, lo que lo hace accesible para distintos tipos de lectores.</p>
+
+  <!-- Sección 1 -->
+  <h2>Origen, estructura y contexto geológico</h2>
+  <p>Uno de los aspectos que más me gustó fue la forma en que explica el <strong>origen de las diatomeas</strong> y las razones detrás de sus características principales. Sabemos que las diatomeas poseen una estructura basada en sílice, pero el libro muestra que esto no es casual está relacionado con las condiciones físico-químicas del océano en distintas épocas geológicas, como el Cenozoico.</p>
+  <p>Factores como el pH, la concentración de oxígeno, los metales pesados y los nutrientes influyeron en la formación de estas estructuras llamadas <strong>frústulas</strong>. Esta conexión entre historia geológica y biología microscópica me pareció especialmente interesante.</p>
+  <p>También se menciona la <strong>teoría endosimbiótica de Lynn Margulis</strong> y su importancia para comprender el origen de los organismos fotosintéticos microscópicos las diatomeas no solo son relevantes por lo que hacen hoy, sino por lo que representan en la historia evolutiva de la vida.</p>
+
+  <!-- Sección 2 -->
+  <h2>Perspectiva ambiental y económica</h2>
+  <p>Otro punto que destaco es la perspectiva económica y ambiental que plantea el libro. Las diatomeas se presentan como una posible alternativa para disminuir la contaminación, pero el autor <strong>no las muestra como una solución perfecta</strong>. Se analizan tanto las ventajas como las limitaciones, especialmente la tensión entre los tiempos biológicos necesarios y la velocidad de los procesos industriales actuales.</p>
+  <p>Desde el punto de vista de la <strong>ilustración científica</strong>, las ilustraciones técnicas del libro me parecieron comprensibles y acertadas, y ayudan a visualizar mejor los conceptos explicados.</p>
+
+  <!-- Lo mejor -->
+  <h2>Balance de la lectura</h2>
+  <div class="pros-grid">
+    <div class="pro-card positive">
+      <h4>✦ Lo que más destaco</h4>
+      <ul>
+        <li>Conexión entre geología y biología microscópica</li>
+        <li>Visión honesta: ventajas y limitaciones</li>
+        <li>Glosario accesible para no especialistas</li>
+        <li>Ilustraciones técnicas claras y útiles</li>
+        <li>Perspectiva del autor como investigador activo</li>
+      </ul>
+    </div>
+    <div class="pro-card neutral">
+      <h4>· A tener en cuenta</h4>
+      <ul>
+        <li>Muy breve (~76 páginas)</li>
+        <li>Puede quedarse corto para lectores avanzados</li>
+        <li>Poca información sobre aplicaciones industriales actuales</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Recomendación -->
+  <div class="recommendation">
+    <div class="rec-icon">💚</div>
+    <h3>¿A quién se lo recomiendo?</h3>
+    <p>A personas interesadas en el <strong>mundo microscópico</strong>, en la <strong>divulgación científica</strong> y en entender cómo organismos invisibles cumplen un papel enorme en el equilibrio del planeta. Es una buena puerta de entrada para quienes quieran conocer más sobre las diatomeas y los ciclos que sostienen la vida en los océanos.<br><br>
+    <strong>Recomendado especialmente para lectores curiosos y amantes de la ilustración científica.</strong></p>
+  </div>
+
+  <div class="article-tags">
+    <span class="article-tag-item">Reseña</span>
+    <span class="article-tag-item">Diatomeas</span>
+    <span class="article-tag-item">Fitoplancton</span>
+    <span class="article-tag-item">Oceanografía</span>
+    <span class="article-tag-item">Divulgación</span>
+    <span class="article-tag-item">Ilustración científica</span>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 · <strong style="color:rgba(255,255,255,0.7)">Biología Ilustrativa</strong> · <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Mayerlin Lemos</a></p>
+  <p>Sígueme en <a href="https://www.instagram.com/biologia_ilustrativa/">Instagram</a></p>
+</footer>
+
+<a href="apoyo.html" class="fab">
+  <span>💚</span>
+  <span>Apoya el blog</span>
+</a>
+
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    menuBtn.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+  });
+</script>
+
+</body>
+</html>

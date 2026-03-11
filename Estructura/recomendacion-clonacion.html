@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Es la clonación la clave para el futuro? | Biología Ilustrativa</title>
+  <link rel="icon" type="image/x-icon" href="Favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde-oscuro: #1a3d2b;
+      --verde-medio: #2d6a4f;
+      --verde-claro: #74c69d;
+      --verde-palido: #d8f3dc;
+      --verde-mint: #f0faf3;
+      --acento: #40916c;
+      --texto: #1b2d23;
+      --texto-suave: #4a6358;
+      --blanco: #ffffff;
+      --sombra: 0 4px 24px rgba(26,61,43,0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--blanco);
+      color: var(--texto);
+      line-height: 1.8;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--verde-palido);
+      padding: 0.75rem 2rem;
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    header img { height: 52px; width: auto; object-fit: contain; }
+    nav { display: flex; align-items: center; gap: 2rem; }
+    nav a {
+      font-weight: 500; font-size: 0.9rem;
+      color: var(--verde-oscuro); text-decoration: none;
+      letter-spacing: 0.03em; position: relative; padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    nav a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--verde-claro);
+      transition: width 0.3s ease;
+    }
+    nav a:hover { color: var(--acento); }
+    nav a:hover::after { width: 100%; }
+    .menu-btn {
+      display: none; background: none; border: none;
+      font-size: 1.5rem; cursor: pointer; color: var(--verde-oscuro);
+    }
+    .mobile-menu {
+      display: none; flex-direction: column;
+      background: var(--verde-mint);
+      padding: 1rem 2rem 1.5rem; gap: 1rem;
+      border-top: 1px solid var(--verde-palido);
+    }
+    .mobile-menu a {
+      font-weight: 500; color: var(--verde-oscuro);
+      text-decoration: none; font-size: 1rem;
+      padding: 0.4rem 0; border-bottom: 1px solid var(--verde-palido);
+    }
+    .mobile-menu.open { display: flex; }
+
+    /* ─── HERO ─── */
+    .article-hero {
+      background-color: var(--verde-oscuro);
+      padding: 5rem 2rem 4rem;
+      position: relative; overflow: hidden; text-align: center;
+    }
+    .article-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Ccircle cx='80' cy='80' r='38' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.25'/%3E%3Ccircle cx='80' cy='80' r='26' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.18'/%3E%3Ccircle cx='66' cy='72' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Ccircle cx='82' cy='65' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Ccircle cx='95' cy='75' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Crect x='160' y='30' width='18' height='120' rx='9' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Cpath d='M160 50 Q178 60 160 70 Q178 80 160 90 Q178 100 160 110 Q178 120 160 130' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.22'/%3E%3Cellipse cx='400' cy='70' rx='14' ry='40' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Cline x1='400' y1='30' x2='406' y2='5' stroke='%2374c69d' stroke-width='1' opacity='0.22' stroke-linecap='round'/%3E%3Ccircle cx='510' cy='90' r='32' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.18'/%3E%3C/svg%3E");
+      background-size: 600px 600px; background-repeat: repeat; z-index: 0;
+    }
+    .article-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(26,61,43,0.90) 0%, rgba(45,106,79,0.82) 60%, rgba(64,145,108,0.86) 100%);
+      z-index: 0;
+    }
+    .article-hero-inner {
+      position: relative; z-index: 1;
+      max-width: 760px; margin: 0 auto;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(116,198,157,0.2);
+      border: 1px solid rgba(116,198,157,0.4);
+      color: var(--verde-claro);
+      font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.2rem;
+    }
+    .article-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; color: var(--blanco);
+      line-height: 1.2; margin-bottom: 1rem;
+    }
+    .article-hero h1 em { font-style: italic; color: var(--verde-claro); }
+    .article-meta { color: rgba(255,255,255,0.60); font-size: 0.85rem; }
+
+    /* ─── CONTENIDO ─── */
+    .article-content {
+      max-width: 740px; margin: 0 auto;
+      padding: 4rem 1.5rem 5rem;
+    }
+    .intro {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-style: italic;
+      color: var(--texto-suave);
+      border-left: 3px solid var(--verde-claro);
+      padding-left: 1.2rem;
+      margin-bottom: 2.5rem; line-height: 1.7;
+    }
+    .article-content p {
+      font-size: 1rem; color: var(--texto);
+      margin-bottom: 1.4rem; line-height: 1.85;
+    }
+    .article-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--verde-oscuro);
+      margin: 3rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--verde-palido);
+    }
+    .article-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--verde-medio);
+      margin: 2rem 0 0.6rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .article-content strong { color: var(--verde-medio); }
+    .article-content em { font-style: italic; }
+
+    /* Listas */
+    .article-list {
+      list-style: none; margin: 1rem 0 1.5rem; padding: 0;
+    }
+    .article-list li {
+      padding: 0.5rem 0 0.5rem 1.6rem;
+      position: relative; font-size: 0.97rem; color: var(--texto);
+      border-bottom: 1px solid var(--verde-palido);
+    }
+    .article-list li:last-child { border-bottom: none; }
+    .article-list li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--verde-claro); font-weight: 600;
+    }
+
+    /* Lista numerada */
+    .steps-list {
+      list-style: none; margin: 1rem 0 1.5rem; padding: 0;
+      counter-reset: steps;
+    }
+    .steps-list li {
+      counter-increment: steps;
+      padding: 0.6rem 0 0.6rem 2.4rem;
+      position: relative; font-size: 0.97rem; color: var(--texto);
+      border-bottom: 1px solid var(--verde-palido);
+    }
+    .steps-list li:last-child { border-bottom: none; }
+    .steps-list li::before {
+      content: counter(steps);
+      position: absolute; left: 0;
+      background: var(--verde-oscuro); color: var(--verde-claro);
+      font-size: 0.75rem; font-weight: 700;
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      top: 0.65rem;
+    }
+
+    /* Highlight */
+    .highlight-box {
+      background: var(--verde-mint);
+      border: 1px solid var(--verde-palido);
+      border-left: 4px solid var(--verde-claro);
+      border-radius: 12px;
+      padding: 1.5rem 1.8rem; margin: 1.5rem 0;
+      font-size: 0.97rem; color: var(--texto-suave); line-height: 1.8;
+    }
+    .highlight-box strong { color: var(--verde-oscuro); }
+
+    /* Cita */
+    .quote {
+      background: var(--verde-mint);
+      border-left: 4px solid var(--verde-claro);
+      border-radius: 0 12px 12px 0;
+      padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-style: italic;
+      color: var(--verde-oscuro);
+    }
+
+    /* Tarjetas de tipos */
+    .types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.2rem; margin: 1.5rem 0;
+    }
+    .type-card {
+      background: var(--blanco);
+      border: 1px solid var(--verde-palido);
+      border-radius: 14px; padding: 1.4rem;
+      box-shadow: var(--sombra);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .type-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(26,61,43,0.14); }
+    .type-card .type-icon {
+      font-size: 1.8rem; margin-bottom: 0.6rem; display: block;
+    }
+    .type-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--verde-oscuro); margin-bottom: 0.6rem;
+    }
+    .type-card p {
+      font-size: 0.87rem; color: var(--texto-suave);
+      line-height: 1.6; margin: 0;
+    }
+
+    /* Dos columnas ética/ciencia */
+    .debate-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin: 1.5rem 0;
+    }
+    .debate-card {
+      border-radius: 12px; padding: 1.3rem;
+      border: 1px solid var(--verde-palido);
+    }
+    .debate-card.science { background: var(--verde-mint); }
+    .debate-card.ethics { background: #fff8f0; border-color: #fcd9a0; }
+    .debate-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem; font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .debate-card.science h4 { color: var(--verde-oscuro); }
+    .debate-card.ethics h4 { color: #7a4500; }
+    .debate-card ul { list-style: none; padding: 0; }
+    .debate-card ul li {
+      font-size: 0.88rem; padding: 0.3rem 0 0.3rem 1.2rem;
+      position: relative; color: var(--texto-suave);
+    }
+    .debate-card.science ul li::before { content: '🔬'; position: absolute; left: 0; font-size: 0.75rem; top: 0.4rem; }
+    .debate-card.ethics ul li::before { content: '⚖️'; position: absolute; left: 0; font-size: 0.75rem; top: 0.4rem; }
+
+    /* Imágenes */
+    .article-img-wrap { margin: 2rem 0; text-align: center; }
+    .article-img-wrap img {
+      max-width: 320px; width: 100%;
+      border-radius: 14px; box-shadow: var(--sombra);
+    }
+    .img-caption {
+      font-size: 0.82rem; color: var(--texto-suave);
+      font-style: italic; margin-top: 0.6rem;
+    }
+
+    /* Cierre */
+    .article-closing {
+      background: var(--verde-oscuro);
+      border-radius: 16px; padding: 2.5rem;
+      text-align: center; margin: 3rem 0 2rem;
+    }
+    .article-closing p { color: rgba(255,255,255,0.80); font-size: 1.05rem; margin: 0; line-height: 1.7; }
+    .article-closing strong { color: var(--verde-claro); }
+
+    .article-tags {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      padding-top: 2rem; border-top: 1px solid var(--verde-palido);
+    }
+    .article-tag-item {
+      background: var(--verde-mint); border: 1px solid var(--verde-palido);
+      color: var(--acento); font-size: 0.78rem;
+      font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 100px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--verde-oscuro);
+      border-top: 1px solid rgba(116,198,157,0.2);
+      padding: 2.5rem 2rem; text-align: center;
+    }
+    footer p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 0.4rem; }
+    footer a { color: var(--verde-claro); text-decoration: none; }
+
+    .fab {
+      position: fixed; bottom: 1.8rem; right: 1.8rem;
+      background: var(--acento); color: var(--blanco);
+      font-weight: 600; font-size: 0.88rem;
+      padding: 0.85rem 1.4rem; border-radius: 100px;
+      text-decoration: none; box-shadow: 0 6px 20px rgba(45,106,79,0.4);
+      display: flex; align-items: center; gap: 0.5rem;
+      z-index: 999; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .fab:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(45,106,79,0.5); }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .menu-btn { display: block; }
+      .fab span:last-child { display: none; }
+      .article-content { padding: 3rem 1.2rem 4rem; }
+      .debate-grid { grid-template-columns: 1fr; }
+      .types-grid { grid-template-columns: 1fr; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .article-hero-inner > * { animation: fadeUp 0.7s ease both; }
+    .article-hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
+    .article-hero-inner > *:nth-child(2) { animation-delay: 0.25s; }
+    .article-hero-inner > *:nth-child(3) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html"><img src="Logofinal.png" alt="Logo de Biología Ilustrativa"></a>
+    <button class="menu-btn" id="menu-btn">☰</button>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="index.html#sobre-mi">Sobre mí</a>
+      <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+      <a href="articulo1.html">Blog</a>
+      <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+    </nav>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Inicio</a>
+    <a href="index.html#sobre-mi">Sobre mí</a>
+    <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+    <a href="articulo1.html">Blog</a>
+    <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="hero-tag">Biotecnología · Ética · Divulgación</span>
+    <h1>¿Es la clonación la clave para el <em>futuro</em> que conocemos?</h1>
+    <p class="article-meta">Por Mayerlin Lemos · 23 de diciembre de 2025</p>
+  </div>
+</div>
+
+<!-- CONTENIDO -->
+<article class="article-content">
+
+  <p class="intro">¿Qué es lo primero que se nos viene a la cabeza cuando hablamos de clonación? Laboratorios futuristas, copias humanas, experimentos fuera de control... Sin embargo, la realidad es que la clonación es un proceso mucho más cercano, antiguo y natural de lo que imaginamos.</p>
+
+  <!-- Qué es -->
+  <h2>¿Qué es la clonación?</h2>
+  <p>La clonación (también llamada clonaje o clonado) consiste en la obtención de un <strong>clon</strong>: un conjunto de elementos genéticamente idénticos entre sí y a su precursor. Estos elementos pueden ser moléculas, células, tejidos, órganos u organismos pluricelulares completos.</p>
+
+  <div class="highlight-box">
+    💡 <strong>Algo muy importante:</strong> la clonación no es un invento moderno. Es un proceso fisiológico normal. Cada vez que una célula se divide mediante mitosis, está generando una copia genética de sí misma. <strong>La clonación siempre ha estado presente en la vida.</strong>
+  </div>
+
+  <!-- Tipos -->
+  <h2>Tipos de clonación</h2>
+
+  <div class="types-grid">
+    <div class="type-card">
+      <span class="type-icon">🧬</span>
+      <h4>Clonación molecular</h4>
+      <p>Clonación de genes o fragmentos de ADN/ARN. Incluye la PCR, usada diariamente en microbiología y diagnóstico. No se crea vida, solo se amplifica información genética.</p>
+    </div>
+    <div class="type-card">
+      <span class="type-icon">🦠</span>
+      <h4>Clonación celular</h4>
+      <p>Amplificación de material genético en células hospedadoras mediante vectores. Permite producir insulina, vacunas, enzimas y proteínas terapéuticas.</p>
+    </div>
+    <div class="type-card">
+      <span class="type-icon">🧫</span>
+      <h4>Clonación de tejidos</h4>
+      <p>Usa células madre para generar tejidos u órganos. Es parte del desarrollo natural y la regeneración de nuestro cuerpo.</p>
+    </div>
+  </div>
+
+  <div class="article-img-wrap">
+    <img src="PCR.png" alt="Reacción en cadena de la polimerasa PCR">
+    <p class="img-caption">La PCR es uno de los ejemplos más cotidianos de clonación molecular</p>
+  </div>
+
+  <!-- Células madre -->
+  <h2>Células madre: el núcleo del debate</h2>
+  <p>Las células madre son células indiferenciadas capaces de autorrenovarse y diferenciarse en distintos tipos celulares. Según su potencial:</p>
+
+  <ul class="article-list">
+    <li><strong>Totipotentes:</strong> capaces de formar un organismo completo</li>
+    <li><strong>Pluripotentes:</strong> capaces de formar casi todos los tejidos</li>
+    <li><strong>Multipotentes:</strong> restringidas a ciertos linajes celulares</li>
+  </ul>
+
+  <div class="article-img-wrap">
+    <img src="Celulas.png" alt="Clonación celular mediante vectores">
+    <p class="img-caption">Clonación celular mediante vectores y ADN recombinante</p>
+  </div>
+
+  <!-- Problema real -->
+  <h2>El verdadero conflicto: clonar organismos completos</h2>
+  <p>La problemática surge cuando se intenta clonar organismos pluricelulares complejos, especialmente mamíferos. El caso más emblemático es la <strong>oveja Dolly</strong>, el primer mamífero clonado a partir de una célula somática.</p>
+
+  <ul class="article-list">
+    <li>Baja eficiencia del proceso</li>
+    <li>Fallos en el desarrollo embrionario</li>
+    <li>Problemas epigenéticos</li>
+    <li>Envejecimiento prematuro</li>
+  </ul>
+
+  <div class="article-img-wrap">
+    <img src="Dolly.png" alt="Oveja Dolly, primer mamífero clonado">
+    <p class="img-caption">La oveja Dolly, un hito científico que también reveló grandes limitaciones</p>
+  </div>
+
+  <!-- Clones idénticos -->
+  <h2>¿Clones idénticos = individuos idénticos?</h2>
+  <p>No. Dos organismos pueden ser genotípicamente muy similares, pero nunca serán la misma persona. La identidad no depende solo de los genes:</p>
+
+  <ul class="article-list">
+    <li>Epigenética</li>
+    <li>Ambiente y experiencias de vida</li>
+    <li>Historia personal</li>
+  </ul>
+
+  <div class="quote">Un clon comparte genes, no recuerdos, conciencia ni vivencias.</div>
+
+  <!-- Lobos -->
+  <h2>El caso de los lobos y la "resurrección" de especies</h2>
+  <p>Proyectos recientes buscan "revivir" especies extintas. Pero es fundamental aclarar algo: <strong>no se ha clonado directamente ningún organismo extinto</strong>. El ADN antiguo se encuentra fragmentado e incompleto. Lo que hace la ciencia es diferente:</p>
+
+  <ol class="steps-list">
+    <li>Se recuperan fragmentos de ADN antiguo</li>
+    <li>Se secuencian y comparan con especies actuales emparentadas</li>
+    <li>Se identifican genes clave</li>
+    <li>Se modifican genomas de organismos vivos cercanos evolutivamente</li>
+  </ol>
+
+  <div class="highlight-box">
+    El resultado <strong>no es un clon</strong>, sino un organismo genéticamente modificado que se parece al extinto. No se revive una especie: se reconstruye un fenotipo aproximado usando parientes vivos.
+  </div>
+
+  <div class="article-img-wrap">
+    <img src="Lobos temibles.png" alt="Lobo prehistórico">
+    <p class="img-caption">Los proyectos de "resurrección" de especies generan grandes preguntas científicas y éticas</p>
+  </div>
+
+  <!-- Debate -->
+  <h2>¿Por qué esto es problemático?</h2>
+
+  <div class="debate-grid">
+    <div class="debate-card science">
+      <h4>Desde la ciencia</h4>
+      <ul>
+        <li>El genoma nunca es completo</li>
+        <li>El ambiente original ya no existe</li>
+        <li>El desarrollo es impredecible</li>
+      </ul>
+    </div>
+    <div class="debate-card ethics">
+      <h4>Desde la ética</h4>
+      <ul>
+        <li>¿Dónde vivirían estos organismos?</li>
+        <li>¿Qué rol ecológico cumplirían?</li>
+        <li>¿Quién asume su bienestar?</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>Los organismos no existen aislados: forman parte de ecosistemas que, en muchos casos, ya desaparecieron.</p>
+
+  <!-- Perspectiva microbiana -->
+  <h2>La perspectiva microbiana: el presente silencioso</h2>
+  <p>Paradójicamente, mientras intentamos recrear grandes organismos extintos, la <strong>clonación microbiana</strong> ha sido una aliada silenciosa del avance científico durante décadas: se clonan genes todos los días, se estudia la evolución molecular, se reconstruyen linajes ancestrales y se producen medicamentos esenciales.</p>
+
+  <div class="quote">Cuanto más simple es el sistema biológico, más controlable y éticamente viable resulta la clonación.</div>
+
+  <!-- Cierre -->
+  <div class="article-closing">
+    <p>La clonación no es el futuro: <strong>es parte del presente y del pasado de la biología</strong>.<br><br>
+    El desafío no está en la técnica en sí, sino en cómo, para qué y hasta dónde decidimos usarla.<br>
+    <strong>La ciencia avanza, pero la ética debe avanzar con ella.</strong></p>
+  </div>
+
+  <div class="article-tags">
+    <span class="article-tag-item">Clonación</span>
+    <span class="article-tag-item">Biotecnología</span>
+    <span class="article-tag-item">Células madre</span>
+    <span class="article-tag-item">Ética científica</span>
+    <span class="article-tag-item">Microbiología</span>
+    <span class="article-tag-item">Divulgación</span>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 · <strong style="color:rgba(255,255,255,0.7)">Biología Ilustrativa</strong> · <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Mayerlin Lemos</a></p>
+  <p>Sígueme en <a href="https://www.instagram.com/biologia_ilustrativa/">Instagram</a></p>
+</footer>
+
+<a href="apoyo.html" class="fab">
+  <span>💚</span>
+  <span>Apoya el blog</span>
+</a>
+
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    menuBtn.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mapa Taxonómico Interactivo — Microalgas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .children { overflow: hidden; max-height: 0; transition: max-height 260ms ease; }
+    .children.open { max-height: 1200px; }
+    .node-btn { display: inline-flex; align-items: center; gap: .5rem; }
+    .match { background: rgba(59,130,246,0.1); border-radius: .25rem; }
+    .focus-ring:focus { outline: 3px solid rgba(99,102,241,0.25); outline-offset: 2px; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen p-6 text-gray-800">
+  <div class="max-w-6xl mx-auto">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-blue-700">🌿 Mapa taxonómico interactivo</h1>
+      <p class="text-sm text-gray-600">Proyecto de microalgas — editable y con tus ilustraciones.</p>
+    </header>
+
+    <div class="flex gap-6">
+      <!-- Panel principal: árbol -->
+      <section class="flex-1 bg-white p-4 rounded-lg shadow-sm">
+        <div class="mb-4 flex flex-wrap gap-2">
+          <input id="search" placeholder="Buscar (ej. Volvox aureus)" class="flex-1 p-2 border rounded focus:ring focus:ring-indigo-200" />
+          <button id="expandAll" class="px-3 py-2 bg-green-600 text-white rounded">Expandir todo</button>
+          <button id="collapseAll" class="px-3 py-2 bg-gray-200 rounded">Colapsar todo</button>
+          <button id="clearSearch" class="px-3 py-2 bg-red-500 text-white rounded">Limpiar</button>
+          <button id="searchAPI" class="px-3 py-2 bg-blue-600 text-white rounded">Buscar especie</button>
+        </div>
+        <div id="treeContainer" class="text-sm"></div>
+      </section>
+
+      <!-- Panel lateral: detalles -->
+      <aside class="w-80 bg-white p-4 rounded-lg shadow-sm">
+        <div id="details" class="mt-3 text-sm text-gray-700">
+          <p class="text-gray-400">Busca una microalga o haz clic en un nodo para ver detalles aquí.</p>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="bg-green-100 mt-6 py-4 text-center text-xs text-gray-600">Hecho con ❤️ — personalízalo con tus ilustraciones.</footer>
+  </div>
+
+  <script>
+    let taxonomy = null;
+
+    /* ----------------- Mapa de ilustraciones ----------------- */
+    const ilustraciones = {
+      "Volvox aureus": "Volvox.png",
+      "Chlorella vulgaris": "Chlorella vulgaris.png",
+      "Scenedesmus obliquus": "scenedesmus.png",
+      "Volvox": "Volvox.png",
+      "Chlamydomonas reinhardtii": "Chamydomonas.png",
+      "Euglena gracilis": "Euglena.png",
+      "Euglena": "Euglena.png",
+      "Chlamydomonas": "Chamydomonas.png",
+      // agrega más especies con tus ilustraciones aquí
+    };
+
+    /* ----------------- Buscar especie y construir taxonomy ----------------- */
+    async function fetchSpecies(name){
+      const response = await fetch(`https://api.gbif.org/v1/species/match?name=${encodeURIComponent(name)}`);
+      const data = await response.json();
+      if(!data.usageKey){
+        alert('No se encontró la especie.');
+        clearSearch();
+        return;
+      }
+
+      const speciesResp = await fetch(`https://api.gbif.org/v1/species/${data.usageKey}`);
+      const speciesData = await speciesResp.json();
+
+      const especieNombre = speciesData.species || speciesData.canonicalName || name;
+      const imagen = ilustraciones[especieNombre] || 'placeholder.png';
+
+      taxonomy = {
+        name: speciesData.kingdom || '',
+        rank: 'Reino',
+        children: [
+          {
+            name: speciesData.phylum || '',
+            rank: 'Filo',
+            children: [
+              {
+                name: speciesData.class || '',
+                rank: 'Clase',
+                children: [
+                  {
+                    name: speciesData.order || '',
+                    rank: 'Orden',
+                    children: [
+                      {
+                        name: speciesData.genus || '',
+                        rank: 'Género',
+                        children: [
+                          {
+                            name: especieNombre,
+                            rank: 'Especie',
+                            kingdom: speciesData.kingdom,
+                            division: speciesData.phylum,
+                            class: speciesData.class,
+                            order: speciesData.order,
+                            genus: speciesData.genus,
+                            image: imagen
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      };
+
+      renderTree();
+      showDetails(taxonomy.children[0].children[0].children[0].children[0].children[0]);
+    }
+
+    /* ----------------- Renderizado de árbol ----------------- */
+    function createNodeElement(node, path=''){
+      const li = document.createElement('li');
+      li.className = 'mb-1';
+      const nodeId = path ? path + ' / ' + node.name : node.name;
+
+      const btn = document.createElement('button');
+      btn.className = 'node-btn focus-ring p-1 rounded hover:bg-gray-50 w-full text-left';
+      btn.setAttribute('type','button');
+      btn.setAttribute('aria-expanded','false');
+      btn.setAttribute('data-path', nodeId);
+
+      const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg.setAttribute('width','14'); svg.setAttribute('height','14');
+      svg.setAttribute('viewBox','0 0 20 20'); svg.classList.add('chev');
+      svg.innerHTML='<path d="M6 4l8 6-8 6V4z" fill="currentColor"/>';
+
+      const textWrap = document.createElement('span');
+      textWrap.className='flex items-center justify-between w-full';
+      const textLeft = document.createElement('span');
+      textLeft.innerHTML=`<strong class="block"><em>${escapeHtml(node.name)}</em></strong>`+
+        (node.rank?`<span class="block text-xs text-gray-500">${escapeHtml(node.rank)}</span>`:'');
+      textWrap.appendChild(textLeft);
+
+      btn.appendChild(svg);
+      btn.appendChild(textWrap);
+      li.appendChild(btn);
+
+      if(node.children && node.children.length){
+        const children = document.createElement('ul');
+        children.className='children pl-4 mt-2';
+        node.children.forEach((child, idx)=>children.appendChild(createNodeElement(child, nodeId+'#'+idx)));
+        btn.addEventListener('click', ()=>{ const isOpen = children.classList.toggle('open'); btn.setAttribute('aria-expanded', String(isOpen)); });
+        li.appendChild(children);
+      } else {
+        btn.addEventListener('click', ()=>showDetails(node));
+      }
+
+      return li;
+    }
+
+    /* ----------------- Mostrar detalles ----------------- */
+    function showDetails(node){
+      const details = document.getElementById('details');
+      details.innerHTML=` 
+        <h2 class="text-xl font-bold mb-2"><em>${node.name}</em></h2>
+        <img src="${node.image}" alt="${node.name}" width="120" class="mx-auto mb-3">
+        <h3 class="font-semibold">Clasificación:</h3>
+        <ul class="list-disc list-inside mb-3">
+          <li><b>Reino:</b> ${node.kingdom || ''}</li>
+          <li><b>División:</b> ${node.division || ''}</li>
+          <li><b>Clase:</b> ${node.class || ''}</li>
+          <li><b>Orden:</b> ${node.order || ''}</li>
+          <li><b>Género:</b> ${node.genus || ''}</li>
+        </ul>
+      `;
+    }
+
+    /* ----------------- Renderizar árbol completo ----------------- */
+    function renderTree(){
+      const root = document.getElementById('treeContainer');
+      root.innerHTML='';
+      if(!taxonomy) return;
+      const ul=document.createElement('ul');
+      ul.className='pl-2';
+      ul.appendChild(createNodeElement(taxonomy,''));
+      root.appendChild(ul);
+    }
+
+    /* ----------------- Utilidades ----------------- */
+    function escapeHtml(str){ return String(str).replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+
+    function clearSearch(){
+      document.getElementById('search').value='';
+      document.getElementById('details').innerHTML=`<p class="text-gray-400">Busca una microalga o haz clic en un nodo para ver detalles aquí.</p>`;
+      document.getElementById('treeContainer').innerHTML='';
+      taxonomy = null;
+    }
+
+    function setAllOpen(open){
+      document.querySelectorAll('.children').forEach(c=>{ if(open)c.classList.add('open'); else c.classList.remove('open'); });
+      document.querySelectorAll('#treeContainer button').forEach(b=>b.setAttribute('aria-expanded',String(open)));
+    }
+
+    /* ----------------- Eventos DOM ----------------- */
+    document.addEventListener('DOMContentLoaded',()=>{
+      const searchInput = document.getElementById('search');
+      document.getElementById('expandAll').addEventListener('click',()=>setAllOpen(true));
+      document.getElementById('collapseAll').addEventListener('click',()=>setAllOpen(false));
+      document.getElementById('clearSearch').addEventListener('click',clearSearch);
+      document.getElementById('searchAPI').addEventListener('click',()=>{ const q=searchInput.value.trim(); if(q) fetchSpecies(q); });
+
+      // Activar búsqueda con Enter
+      searchInput.addEventListener('keydown',(e)=>{
+        if(e.key==='Enter'){
+          e.preventDefault();
+          const q=searchInput.value.trim();
+          if(q) fetchSpecies(q);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

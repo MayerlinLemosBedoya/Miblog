@@ -1,160 +1,610 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Biología Ilustrativa | Mayerlin Lemos Bedoya</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  </head>
-  <body class="bg-white text-gray-800 font-sans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi camino en la ilustración científica | Biología Ilustrativa</title>
+  <link rel="icon" type="image/x-icon" href="Favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde-oscuro: #1a3d2b;
+      --verde-medio: #2d6a4f;
+      --verde-claro: #74c69d;
+      --verde-palido: #d8f3dc;
+      --verde-mint: #f0faf3;
+      --acento: #40916c;
+      --texto: #1b2d23;
+      --texto-suave: #4a6358;
+      --blanco: #ffffff;
+      --sombra: 0 4px 24px rgba(26,61,43,0.10);
+    }
 
-    <!-- 🔝 Header -->
-    <header class="bg-green-90 shadow-md sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
-       <img src="/Estructura/img/Logofinal.png" alt="Logo de Biología Ilustrativa" class="h-20">
-        <nav class="space-x-6 hidden md:block">
-          <a href="/Estructura/index.html" class="text-green-800 hover:underline">Inicio</a>
-          <a href="/Estructura/index.html" class="text-green-800 hover:underline">Sobre mí</a>
-          <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" class="text-green-800 hover:underline">Portafolio</a>
-          <a href="/Estructura/index.html#blog" class="text-green-800 hover:underline">Blog</a>
-          <a href="/Estructura/index.html#contacto" class="text-green-800 hover:underline">Contacto</a>
-        </nav>
-      </div>
-    </header>
-  <!-- Contenido principal -->
-  <main class="max-w-3xl mx-auto p-6" id="inicio">
-    <h2 class="text-3xl font-bold text-green-700 mb-6">🧬 Mi camino en la ilustración científica</h2>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-    <p class="mb-4 italic">¿Alguna vez has sentido que una imagen expresa más que mil palabras?</p>
-    <p class="mb-4 text-justify">Desde muy pequeña he sido una persona muy visual. Disfrutaba de los pequeños detalles, como ver las partículas de polvo atravesar la luz del atardecer. Mi interés siempre se centró en la experimentación con la naturaleza. Recuerdo que mis primeros “experimentos” consistían en inducir el proceso de fermentación en jugos para ver qué pasaba, o dejar alimentos varios días al aire libre para observar cómo aparecían hongos y ver ese pequeño ecosistema en acción. Creo que todos esos acercamientos me ayudaron a convertirme en la persona que soy ahora.</p>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--blanco);
+      color: var(--texto);
+      line-height: 1.8;
+    }
 
-    <section id="articulos">
-      <h3 class="text-2xl font-semibold text-green-600 mt-8 mb-2">Primeras influencias y un lema que marcó mi infancia</h3>
-      <p class="mb-4 text-justify">En la primaria veía programas como Art Attack e interioricé su lema:
-"No debes ser un experto para ser un gran artista."
+    /* ─── HEADER ─── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--verde-palido);
+      padding: 0.75rem 2rem;
+    }
 
-Mientras tanto, seguía ilustrando escenas de mis programas favoritos, y mi mamá me ayudaba a vender esas ilustraciones a las hijas de las vecinas. Ella siempre me decía que tenía talento. Siempre fui una chica muy inquieta: cuando algo se me metía en la cabeza, no podía dejar de pensarlo hasta que lo hacía realidad.</p>
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
 
-      <h3 class="text-2xl font-semibold text-green-600 mt-8 mb-2">Cómo nació mi pasión por la biología ilustrada</h3>
-      <p class="mb-4 text-justify">Crecí con ese entusiasmo, y con el tiempo mis ilustraciones comenzaron a tener más enfoque y claridad. En el bachillerato, las clases de biología me fascinaban. Para cada tema, hacía ilustraciones que me ayudaban a entender mejor. Me encantaba dibujar células animales, vegetales, neuronas… sin saber que eso ya era ilustración científica.
-</p>
+    header img { height: 52px; width: auto; object-fit: contain; }
 
-      <h3 class="text-2xl font-semibold text-green-600 mt-8 mb-2">Decisiones importantes: ciencias naturales y el CASD</h3>
-      <p class="mb-4 text-justify">Llegó el momento de elegir una especialidad en el colegio, ya que era un bachillerato técnico. Recuerdo con mucha claridad que, a finales de 2016, dije con felicidad que quería el énfasis en ciencias naturales aplicadas. Ese fue el inicio de un camino más cercano con la ciencia, uno que aún continúo recorriendo.<br> Mi paso por el CASD fue maravilloso. Me sentía como una pequeña científica. Seguía ilustrando a medida que avanzábamos por distintas temáticas: ciencias de la tierra, biofísica, microbiología. Cuando llegamos a microbiología, algo hizo clic. Mi cerebro es muy activo, y cuando algo me gusta, lo siento de una manera muy intensa. Disfruté cada etapa y cada práctica. Mi favorita fue cuando observamos protozoarios. ¡Fue increíble! Pude ilustrar cada uno, con sus formas asimétricas y colores distintos. Ahí supe que quería estudiar microbiología.</p>
+    nav { display: flex; align-items: center; gap: 2rem; }
 
-      <h3 class="text-2xl font-semibold text-green-600 mt-8 mb-2">Universidad, pandemia y un giro emocional</h3>
-      <p class="mb-4 text-justify"> En 2018, al terminar el bachillerato técnico, ingresé al pregrado en microbiología en la USC en 2019. Recuerdo mis primeros semestres llenos de ilusión y muchas ideas, porque esta ciencia tiene muchísimos enfoques: industrial, ambiental, clínico. Seguí ilustrando... hasta que llegó la pandemia.
+    nav a {
+      font-weight: 500; font-size: 0.9rem;
+      color: var(--verde-oscuro); text-decoration: none;
+      letter-spacing: 0.03em; position: relative; padding-bottom: 2px;
+      transition: color 0.2s;
+    }
 
-En 2020 mi inspiración se apagó un poco. Fueron tiempos complejos: la pandemia, la enfermedad huérfana y degenerativa de mi tía paterna, y mi cuerpo y mi mente comenzaron a pasarme factura por años de no atenderme. El confinamiento fue difícil para todos, pero en mi caso, con mi rigidez cognitiva, fue aún más retador. Fue una experiencia agridulce: me protegió de la sobreestimulación del transporte público, pero me volvió más sedentaria y redujo mi energía creativa. Aun así, ese momento nos marcó, y me enseñó a ser más consciente del cuidado del cuerpo y la mente.</p>
+    nav a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--verde-claro);
+      transition: width 0.3s ease;
+    }
 
-      <h3 class="text-2xl font-semibold text-green-600 mt-8 mb-2">Prácticas académicas y nacimiento de un emprendimiento</h3>
-      <p class="mb-4 text-justify">En 2022 llegó un punto crucial para mi crecimiento creativo: mis prácticas académicas. Fue el momento de enfrentarme a la realidad profesional y ver de cerca la belleza de los microorganismos. Disfrutaba mucho estar en el laboratorio, observando colonias de bacterias y hongos que eran pura inspiración visual para mí.
+    nav a:hover { color: var(--acento); }
+    nav a:hover::after { width: 100%; }
 
-Sin embargo, como mencioné antes, mi salud se venía debilitando. Desde niña me costaba aceptar que necesitaba apoyos, que era diferente, y que eso no estaba mal. Aun así, guardo un recuerdo bonito de esa etapa porque, en medio del caos, creé un emprendimiento: “Llaveros de Micro” actualmente Biología Ilustrativa. Hacía llaveros inspirados en cultivos microbianos. No era un emprendimiento perfecto, pero me permitió canalizar emociones y acercarme más a lo que hoy reconozco como ilustración científica.</p>
+    .menu-btn {
+      display: none; background: none; border: none;
+      font-size: 1.5rem; cursor: pointer; color: var(--verde-oscuro);
+    }
 
-      <h3 class="text-2xl font-semibold text-green-600 mt-8 mb-2">Redescubrimiento: lo análogo, el microscopio y el diseño</h3>
-      <p class="mb-4 text-justify">En 2023 terminé mis clases del pregrado en microbiología. Ese año pude indagar mucho más en la ilustración, sobre todo desde lo análogo. Compré mi primer microscopio y comencé a ilustrar a mis microorganismos favoritos: las microalgas y los protozoarios (menos las amebas, algunas especies me dan un poco de miedo, jeje).</p>
+    .mobile-menu {
+      display: none; flex-direction: column;
+      background: var(--verde-mint);
+      padding: 1rem 2rem 1.5rem; gap: 1rem;
+      border-top: 1px solid var(--verde-palido);
+    }
 
-      <h3 class="text-2xl font-semibold text-green-600 mt-8 mb-2">El gran hallazgo: ilustración científica</h3>
-      <p class="mb-4 text-justify">Comencé a pensar mucho en qué hacer después de graduarme. A principios de 2024 me sentía llena de dudas, en búsqueda de un lugar donde encajar. Hasta que, a mediados de junio, buscando en internet ilustraciones de protozoarios, encontré un término que me cambió todo: ilustración científica. <br> Me dije: “¿Ilustración científica?”
-Y al investigar más, me di cuenta de que todos estos años la había estado haciendo sin saberlo.
-</p>
+    .mobile-menu a {
+      font-weight: 500; color: var(--verde-oscuro);
+      text-decoration: none; font-size: 1rem;
+      padding: 0.4rem 0; border-bottom: 1px solid var(--verde-palido);
+    }
 
-      <h3 class="text-2xl font-semibold text-green-600 mt-8 mb-2">Un arte ancestral, una nueva oportunidad</h3>
-      <p class="mb-4 text-justify">La ilustración científica es un campo muy antiguo. En la historia de la ciencia hemos tenido ilustradores fundamentales: Darwin, durante su expedición por las islas Galápagos, realizaba dibujos; Mendel, padre de la genética, ilustraba sus garbanzos para documentar sus experimentos. Desde la botánica hasta la microbiología, pasando por la zoología, siempre ha habido ilustradores científicos. ¡Los científicos también tenemos un lado creativo!
+    .mobile-menu.open { display: flex; }
 
-La ilustración científica siempre ha estado ahí, como una herramienta para explicar lo complejo desde lo visual: anatomía, química, microbiología… todas se apoyan en imágenes para ayudar a entender mejor.
+    /* ─── HERO ─── */
+    .article-hero {
+      background-color: var(--verde-oscuro);
+      padding: 5rem 2rem 4rem;
+      position: relative; overflow: hidden; text-align: center;
+    }
 
-Hoy, gracias a la tecnología, la ilustración científica también ha evolucionado. Existen herramientas digitales como Procreate, Sketchbook o Adobe Illustrator que nos permiten trabajar y ofrecer nuestros servicios de manera más práctica. Pero eso no le quita valor a lo análogo: lo tradicional nos conecta con cada trazo, cada textura, cada color.
-</p>
+    .article-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Ccircle cx='80' cy='80' r='38' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.25'/%3E%3Ccircle cx='80' cy='80' r='26' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.18'/%3E%3Ccircle cx='66' cy='72' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Ccircle cx='82' cy='65' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Ccircle cx='95' cy='75' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Ccircle cx='90' cy='90' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Ccircle cx='70' cy='90' r='5' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.20'/%3E%3Crect x='160' y='30' width='18' height='120' rx='9' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Cpath d='M160 50 Q178 60 160 70 Q178 80 160 90 Q178 100 160 110 Q178 120 160 130' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.22'/%3E%3Cellipse cx='400' cy='70' rx='14' ry='40' fill='none' stroke='%2374c69d' stroke-width='1.2' opacity='0.20'/%3E%3Cline x1='400' y1='30' x2='406' y2='5' stroke='%2374c69d' stroke-width='1' opacity='0.22' stroke-linecap='round'/%3E%3Ccircle cx='510' cy='90' r='32' fill='none' stroke='%2374c69d' stroke-width='1' opacity='0.18'/%3E%3Ccircle cx='510' cy='90' r='10' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.18'/%3E%3Ccircle cx='493' cy='80' r='8' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.18'/%3E%3Ccircle cx='527' cy='80' r='8' fill='none' stroke='%2374c69d' stroke-width='0.8' opacity='0.18'/%3E%3C/svg%3E");
+      background-size: 600px 600px; background-repeat: repeat; z-index: 0;
+    }
 
-      <h3 class="text-2xl font-semibold text-green-600 mt-8 mb-2">Un nuevo comienzo (otra vez)</h3>
-      <p class="mb-4">Gracias a ese descubrimiento, me acerqué al mundo del diseño. Así inicié mi segundo pregrado en diseño gráfico.
-Recuerdo una frase muy especial que me dijo mi amigo Francisco:
+    .article-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(26,61,43,0.90) 0%, rgba(45,106,79,0.82) 60%, rgba(64,145,108,0.86) 100%);
+      z-index: 0;
+    }
 
-“Debes encontrar tu lugar feliz.”
+    .article-hero-inner {
+      position: relative; z-index: 1;
+      max-width: 700px; margin: 0 auto;
+    }
 
-Y yo lo encontré aquí, en la ilustración científica.</p>
+    .article-tag {
+      display: inline-block;
+      background: rgba(116,198,157,0.2);
+      border: 1px solid rgba(116,198,157,0.4);
+      color: var(--verde-claro);
+      font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.2rem;
+    }
 
-      <blockquote class="border-l-4 border-green-400 pl-4 italic text-gray-600 my-4">
-        “Debes encontrar tu lugar feliz.”
-      </blockquote>
+    .article-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; color: var(--blanco);
+      line-height: 1.2; margin-bottom: 1rem;
+    }
 
-      <p class="text-lg font-medium text-gray-700 mt-8">💚 Gracias por estar aquí y por leerme.</p>
-    </section>
-  </main>
+    .article-hero h1 em { font-style: italic; color: var(--verde-claro); }
 
-  <div class="relative w-full max-w-2xl mx-auto mt-10 overflow-hidden rounded-xl shadow-lg">
-  <!-- Contenedor de imágenes -->
-  <div id="carrusel" class="flex transition-transform duration-500 ease-in-out">
-    <img src="/Estructura/Reinterpretacionodisea2016.jpeg" class="w-full h-70 object-cover flex-shrink-0" alt="Imagen 1" />
-    <img src="/Estructura/Apuntes2021.jpeg" class="w-full h-70 object-cover flex-shrink-0" alt="Imagen 3" />
-    <img src="/Estructura/LLaverosdemicro2022.jpeg" class="w-full h-70 object-cover flex-shrink-0" alt="Imagen 4" />
-    <img src="/Estructura/Ilustraciones2023.jpeg" class="w-full h-70 object-cover flex-shrink-0" alt="Imagen 5" />
-    <img src="/Estructura/Globulosrojos2024.jpeg" class="w-full h-70 object-cover flex-shrink-0" alt="Imagen 6" />
-    <img src="/Estructura/Ilustración microalgas.png" class="w-full h-70 object-cover flex-shrink-0" alt="Imagen 7" />
+    .article-meta { color: rgba(255,255,255,0.60); font-size: 0.85rem; }
+
+    /* ─── TIMELINE ─── */
+    .timeline {
+      max-width: 720px; margin: 0 auto;
+      padding: 4rem 1.5rem 2rem;
+    }
+
+    .timeline-intro {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-style: italic;
+      color: var(--texto-suave);
+      border-left: 3px solid var(--verde-claro);
+      padding-left: 1.2rem;
+      margin-bottom: 3rem; line-height: 1.7;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .timeline-item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 39px; top: 48px;
+      width: 2px;
+      bottom: -3rem;
+      background: linear-gradient(to bottom, var(--verde-claro), var(--verde-palido));
+    }
+
+    .timeline-year {
+      text-align: center; padding-top: 0.2rem;
+    }
+
+    .year-badge {
+      display: inline-block;
+      background: var(--verde-oscuro);
+      color: var(--verde-claro);
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 0.4rem 0.6rem;
+      border-radius: 8px;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .timeline-dot {
+      width: 12px; height: 12px;
+      background: var(--verde-claro);
+      border-radius: 50%;
+      margin: 0.8rem auto 0;
+      border: 2px solid var(--blanco);
+      box-shadow: 0 0 0 3px var(--verde-claro);
+    }
+
+    .timeline-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--verde-oscuro);
+      margin-bottom: 0.75rem; line-height: 1.35;
+    }
+
+    .timeline-content p {
+      font-size: 0.97rem; color: var(--texto);
+      margin-bottom: 1rem; line-height: 1.85;
+    }
+
+    .timeline-content strong { color: var(--verde-medio); }
+    .timeline-content em { font-style: italic; }
+
+    /* Cita */
+    .quote {
+      background: var(--verde-mint);
+      border-left: 4px solid var(--verde-claro);
+      border-radius: 0 12px 12px 0;
+      padding: 1.2rem 1.5rem;
+      margin: 1rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-style: italic;
+      color: var(--verde-oscuro);
+    }
+
+    /* Highlight */
+    .highlight-box {
+      background: var(--verde-mint);
+      border: 1px solid var(--verde-palido);
+      border-left: 4px solid var(--verde-claro);
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+      color: var(--texto-suave); line-height: 1.8;
+    }
+
+    /* ─── CARRUSEL ─── */
+    .carousel-section {
+      background: var(--verde-mint);
+      padding: 4rem 1.5rem;
+    }
+
+    .carousel-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--verde-oscuro);
+      text-align: center; margin-bottom: 2rem;
+    }
+
+    .carousel-wrap {
+      max-width: 760px; margin: 0 auto;
+      position: relative; border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(26,61,43,0.15);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .carousel-track img {
+      width: 100%; flex-shrink: 0;
+      height: 380px; object-fit: cover;
+      display: block;
+    }
+
+    .carousel-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(26,61,43,0.90), transparent);
+      color: var(--blanco);
+      padding: 2rem 1.5rem 1.2rem;
+      font-size: 0.9rem; font-weight: 400;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.90);
+      border: none; cursor: pointer;
+      width: 44px; height: 44px; border-radius: 50%;
+      font-size: 1.3rem; color: var(--verde-oscuro);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      transition: background 0.2s, transform 0.2s;
+      z-index: 2;
+    }
+
+    .carousel-btn:hover { background: var(--blanco); transform: translateY(-50%) scale(1.08); }
+    .carousel-btn.prev { left: 1rem; }
+    .carousel-btn.next { right: 1rem; }
+
+    .carousel-dots {
+      display: flex; justify-content: center; gap: 0.5rem;
+      margin-top: 1.2rem;
+    }
+
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--verde-palido); cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .dot.active { background: var(--acento); transform: scale(1.3); }
+
+    /* ─── CIERRE ─── */
+    .article-closing-wrap {
+      max-width: 720px; margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    .article-closing {
+      background: var(--verde-oscuro);
+      border-radius: 16px; padding: 2.5rem;
+      text-align: center; margin-bottom: 2rem;
+    }
+
+    .article-closing p { color: rgba(255,255,255,0.80); font-size: 1.05rem; margin: 0; }
+    .article-closing strong { color: var(--verde-claro); }
+
+    .article-tags {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      padding-top: 2rem; border-top: 1px solid var(--verde-palido);
+    }
+
+    .article-tag-item {
+      background: var(--verde-mint);
+      border: 1px solid var(--verde-palido);
+      color: var(--acento); font-size: 0.78rem;
+      font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 100px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--verde-oscuro);
+      border-top: 1px solid rgba(116,198,157,0.2);
+      padding: 2.5rem 2rem; text-align: center;
+    }
+
+    footer p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 0.4rem; }
+    footer a { color: var(--verde-claro); text-decoration: none; }
+
+    .fab {
+      position: fixed; bottom: 1.8rem; right: 1.8rem;
+      background: var(--acento); color: var(--blanco);
+      font-weight: 600; font-size: 0.88rem;
+      padding: 0.85rem 1.4rem; border-radius: 100px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(45,106,79,0.4);
+      display: flex; align-items: center; gap: 0.5rem;
+      z-index: 999; transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .fab:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(45,106,79,0.5); }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .menu-btn { display: block; }
+      .fab span:last-child { display: none; }
+      .timeline { padding: 3rem 1.2rem 2rem; }
+      .timeline-item { grid-template-columns: 60px 1fr; gap: 1rem; }
+      .carousel-track img { height: 240px; }
+      .article-closing-wrap { padding: 2rem 1.2rem 4rem; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .article-hero-inner > * { animation: fadeUp 0.7s ease both; }
+    .article-hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
+    .article-hero-inner > *:nth-child(2) { animation-delay: 0.25s; }
+    .article-hero-inner > *:nth-child(3) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html"><img src="Logofinal.png" alt="Logo de Biología Ilustrativa"></a>
+    <button class="menu-btn" id="menu-btn">☰</button>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="index.html#sobre-mi">Sobre mí</a>
+      <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+      <a href="articulo1.html">Blog</a>
+      <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+    </nav>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Inicio</a>
+    <a href="index.html#sobre-mi">Sobre mí</a>
+    <a href="https://portafoliodemayerlinlemosbedoya.netlify.app/aprendizaje/tarjetapresentaci%C3%B3n/" target="_blank">Portafolio</a>
+    <a href="articulo1.html">Blog</a>
+    <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Contacto</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="article-tag">Artículo personal · Trayectoria</span>
+    <h1>Mi camino en la <em>ilustración científica</em></h1>
+    <p class="article-meta">Por Mayerlin Lemos · Biología Ilustrativa</p>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<section class="timeline">
+
+  <p class="timeline-intro">¿Alguna vez has sentido que una imagen expresa más que mil palabras? Desde muy pequeña, siempre lo sentí así.</p>
+
+  <!-- 1. Infancia -->
+  <div class="timeline-item">
+    <div class="timeline-year">
+      <div class="year-badge">Infancia</div>
+      <div class="timeline-dot"></div>
+    </div>
+    <div class="timeline-content">
+      <h2>Una niña visual y curiosa</h2>
+      <p>Desde muy pequeña disfrutaba de los pequeños detalles: las partículas de polvo atravesando la luz del atardecer, los hongos que aparecían en alimentos que dejaba al aire libre, el proceso de fermentación que inducía en jugos. Mis primeros "experimentos" me ayudaron a convertirme en la persona que soy hoy.</p>
+      <div class="quote">"No debes ser un experto para ser un gran artista." — Art Attack</div>
+      <p>Interiorizé ese lema desde la primaria. Mientras tanto, ilustraba escenas de mis programas favoritos, y mi mamá me ayudaba a vender esas ilustraciones. Ella siempre me decía que tenía talento.</p>
+    </div>
   </div>
 
-  <!-- Botones -->
-  <button id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/70 px-3 py-1 rounded-r hover:bg-white">‹</button>
-  <button id="next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/70 px-3 py-1 rounded-l hover:bg-white">›</button>
-  <div id="descripcion" class="absolute bottom-0 w-full bg-black/60 text-black text-center py-2 text-sm md:text-base">
-  Reinterpretación de  la Odisea (2016)
-</div>
+  <!-- 2. Bachillerato -->
+  <div class="timeline-item">
+    <div class="timeline-year">
+      <div class="year-badge">2016</div>
+      <div class="timeline-dot"></div>
+    </div>
+    <div class="timeline-content">
+      <h2>Biología, dibujo y el CASD</h2>
+      <p>En el bachillerato, las clases de biología me fascinaban. Para cada tema hacía ilustraciones que me ayudaban a entender mejor: células animales, vegetales, neuronas… sin saber que eso ya era <strong>ilustración científica</strong>.</p>
+      <p>A finales de 2016 elegí el énfasis en <strong>ciencias naturales aplicadas</strong>. Mi paso por el CASD fue maravilloso — me sentía como una pequeña científica. Cuando llegamos a microbiología, algo hizo clic. Mi favorita fue cuando observamos protozoarios: pude ilustrar cada uno, con sus formas asimétricas. Ahí supe que quería estudiar microbiología.</p>
+    </div>
+  </div>
+
+  <!-- 3. Universidad -->
+  <div class="timeline-item">
+    <div class="timeline-year">
+      <div class="year-badge">2019</div>
+      <div class="timeline-dot"></div>
+    </div>
+    <div class="timeline-content">
+      <h2>El pregrado en microbiología</h2>
+      <p>Ingresé al pregrado en microbiología en la USC llena de ilusión y muchas ideas, porque esta ciencia tiene muchísimos enfoques: industrial, ambiental, clínico. Seguí ilustrando con entusiasmo.</p>
+    </div>
+  </div>
+
+  <!-- 4. Pandemia -->
+  <div class="timeline-item">
+    <div class="timeline-year">
+      <div class="year-badge">2020</div>
+      <div class="timeline-dot"></div>
+    </div>
+    <div class="timeline-content">
+      <h2>La pandemia y el silencio creativo</h2>
+      <p>En 2020 mi inspiración se apagó un poco. Fueron tiempos complejos: la pandemia, la enfermedad huérfana de mi tía paterna, y mi cuerpo y mente comenzaron a pasarme factura por años de no atenderme.</p>
+      <div class="highlight-box">El confinamiento fue difícil para todos, pero en mi caso, con mi rigidez cognitiva, fue aún más retador. Me protegió de la sobreestimulación, pero redujo mi energía creativa. Aun así, ese momento me enseñó a ser más consciente del <strong>cuidado del cuerpo y la mente</strong>.</div>
+    </div>
+  </div>
+
+  <!-- 5. Prácticas -->
+  <div class="timeline-item">
+    <div class="timeline-year">
+      <div class="year-badge">2022</div>
+      <div class="timeline-dot"></div>
+    </div>
+    <div class="timeline-content">
+      <h2>Prácticas académicas y el primer emprendimiento</h2>
+      <p>Llegaron mis prácticas académicas: el momento de enfrentarme a la realidad profesional y ver de cerca la belleza de los microorganismos. Disfrutaba estar en el laboratorio, observando colonias de bacterias y hongos que eran pura inspiración visual.</p>
+      <p>En medio del caos, creé un emprendimiento: <strong>"Llaveros de Micro"</strong>, hoy <strong>Biología Ilustrativa</strong>. Hacía llaveros inspirados en cultivos microbianos — no era perfecto, pero me permitió canalizar emociones y acercarme a lo que hoy reconozco como ilustración científica.</p>
+    </div>
+  </div>
+
+  <!-- 6. Microscopio -->
+  <div class="timeline-item">
+    <div class="timeline-year">
+      <div class="year-badge">2023</div>
+      <div class="timeline-dot"></div>
+    </div>
+    <div class="timeline-content">
+      <h2>El microscopio propio y lo análogo</h2>
+      <p>Terminé mis clases del pregrado en microbiología. Ese año pude indagar mucho más en la ilustración desde lo análogo. Compré mi primer microscopio y comencé a ilustrar a mis microorganismos favoritos: las microalgas y los protozoarios.</p>
+    </div>
+  </div>
+
+  <!-- 7. Descubrimiento -->
+  <div class="timeline-item">
+    <div class="timeline-year">
+      <div class="year-badge">2024</div>
+      <div class="timeline-dot"></div>
+    </div>
+    <div class="timeline-content">
+      <h2>El gran hallazgo: ilustración científica</h2>
+      <p>A principios de 2024 me sentía llena de dudas, en búsqueda de un lugar donde encajar. Hasta que, a mediados de junio, buscando ilustraciones de protozoarios, encontré un término que me cambió todo: <strong>ilustración científica</strong>.</p>
+      <div class="quote">"¿Ilustración científica?" — y al investigar más, me di cuenta de que todos estos años la había estado haciendo sin saberlo.</div>
+      <p>La ilustración científica es un campo muy antiguo. Darwin ilustraba durante sus expediciones, Mendel dibujaba sus garbanzos para documentar sus experimentos. Siempre ha estado ahí, como herramienta para explicar lo complejo desde lo visual.</p>
+    </div>
+  </div>
+
+  <!-- 8. Diseño -->
+  <div class="timeline-item">
+    <div class="timeline-year">
+      <div class="year-badge">2025</div>
+      <div class="timeline-dot"></div>
+    </div>
+    <div class="timeline-content">
+      <h2>Un nuevo comienzo: diseño gráfico</h2>
+      <p>Gracias a ese descubrimiento, me acerqué al mundo del diseño e inicié mi segundo pregrado en <strong>diseño gráfico</strong>. Hoy combino mi formación científica con las artes visuales para crear ilustración científica que divulga y educa.</p>
+      <div class="quote">"Debes encontrar tu lugar feliz." — Francisco</div>
+      <p>Y yo lo encontré aquí, en la ilustración científica. 🌿</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- CARRUSEL -->
+<section class="carousel-section">
+  <h2>Mi trayectoria en imágenes</h2>
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="carousel-track">
+      <img src="Reinterpretacionodisea2016.jpeg" alt="Reinterpretación de Odisea 2016">
+      <img src="Apuntes2021.jpeg" alt="Apuntes 2021">
+      <img src="LLaverosdemicro2022.jpeg" alt="Llaveros de microbiología 2022">
+      <img src="Ilustraciones2023.jpeg" alt="Ilustraciones científicas 2023">
+      <img src="Globulosrojos2024.jpeg" alt="Glóbulos rojos 2024">
+      <img src="Ilustración microalgas.png" alt="Microalgas 2025">
+    </div>
+    <div class="carousel-caption" id="carousel-caption"></div>
+    <button class="carousel-btn prev" id="prev">‹</button>
+    <button class="carousel-btn next" id="next">›</button>
+  </div>
+  <div class="carousel-dots" id="carousel-dots"></div>
+</section>
+
+<!-- CIERRE -->
+<div class="article-closing-wrap">
+  <div class="article-closing">
+    <p>💚 <strong>Gracias por estar aquí y por leerme.</strong><br>
+    Este camino apenas comienza, y me alegra recorrerlo con personas curiosas como tú.</p>
+  </div>
+  <div class="article-tags">
+    <span class="article-tag-item">Ilustración científica</span>
+    <span class="article-tag-item">Microbiología</span>
+    <span class="article-tag-item">Trayectoria</span>
+    <span class="article-tag-item">Biología Ilustrativa</span>
+    <span class="article-tag-item">Diseño gráfico</span>
+    <span class="article-tag-item">Divulgación</span>
+  </div>
 </div>
 
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 · <strong style="color:rgba(255,255,255,0.7)">Biología Ilustrativa</strong> · <a href="mailto:mayerlin.lemos.ilustra@gmail.com">Mayerlin Lemos</a></p>
+  <p>Sígueme en <a href="https://www.instagram.com/biologia_ilustrativa/">Instagram</a></p>
+</footer>
+
+<a href="apoyo.html" class="fab">
+  <span>💚</span>
+  <span>Apoya el blog</span>
+</a>
 
 <script>
+  // Menú móvil
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    menuBtn.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+  });
 
+  // Carrusel
   const descripciones = [
-  "Reinterpretación de Odisea (2016)",
-  "Ciclo de vida del mosquito causante de la malaria (2021)",
-  "Llaveros de microbiología (2022)",
-  "Ilustraciones científicas (2023)",
-  "Glóbulos rojos – Células en acción (2024)",
-  "Microalgas – Ilustración digital (2025)"
-];
+    "Reinterpretación de Odisea (2016)",
+    "Ciclo de vida del mosquito causante de la malaria (2021)",
+    "Llaveros de microbiología — primer emprendimiento (2022)",
+    "Ilustraciones científicas (2023)",
+    "Glóbulos rojos – Células en acción (2024)",
+    "Diversidad del fitoplancton – Ilustración digital (2025)"
+  ];
 
-  const descripcion = document.getElementById('descripcion');
-  const carrusel = document.getElementById('carrusel');
-  const prev = document.getElementById('prev');
-  const next = document.getElementById('next');
-  let index = 0;
+  let idx = 0;
+  const track = document.getElementById('carousel-track');
+  const caption = document.getElementById('carousel-caption');
+  const dotsWrap = document.getElementById('carousel-dots');
+  const total = track.children.length;
 
-  function updateCarrusel() {
-    const total = carrusel.children.length;
-    if (index < 0) index = total - 1;
-    if (index >= total) index = 0;
-    carrusel.style.transform = `translateX(-${index * 100}%)`;
-    document.getElementById('descripcion').textContent = descripciones[index];
+  // Crear dots
+  descripciones.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => { idx = i; update(); });
+    dotsWrap.appendChild(dot);
+  });
 
+  function update() {
+    if (idx < 0) idx = total - 1;
+    if (idx >= total) idx = 0;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    caption.textContent = descripciones[idx];
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+    });
   }
 
-  setInterval(() => {
-  index++;
-  updateCarrusel();
-}, 4000); // cambia cada 4 segundos
-  // Eventos de los botones
-  prev.addEventListener('click', () => {
-    index--;
-    updateCarrusel();
-  });
-
-  next.addEventListener('click', () => {
-    index++;
-    updateCarrusel();
-    
-  });
+  document.getElementById('prev').addEventListener('click', () => { idx--; update(); });
+  document.getElementById('next').addEventListener('click', () => { idx++; update(); });
+  setInterval(() => { idx++; update(); }, 4500);
+  update();
 </script>
-
-  <!-- Footer -->
-  <footer class="bg-gray-100 text-center text-sm text-gray-600 mt-12 py-4" id="contacto">
-    <p>© 2025 Mayerlin Lemos – Biología Ilustrativa</p>
-    <p>Sígueme en 
-      <a href="https://www.instagram.com/biologia_ilustrativa/" class="text-indigo-600 hover:underline">Instagram</a> o 
-      <a href="mailto:mayerlin.lemos.ilustra@gmail.com" class="text-indigo-600 hover:underline">escríbeme</a>.
-    </p>
-  </footer>
 
 </body>
 </html>

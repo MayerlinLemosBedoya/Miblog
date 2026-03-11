@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mapa Taxonómico Interactivo — Microalgas</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  #search {
+    border: 1px solid #d1d5db; /* borde gris claro */
+    outline: none; /* quita la línea azul por defecto */
+    box-shadow: none; /* quita cualquier sombra de foco */
+  }
+
+  #search:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: #34d399; /* opcional: resaltar borde en verde al enfocar */
+  }
+
+  /* Quitar borde negro y foco por defecto de los botones */
+  button {
+    outline: none;       /* quita el borde de enfoque predeterminado */
+    box-shadow: none;    /* quita sombras predeterminadas */
+  }
+
+  button:focus {
+    outline: none;
+    box-shadow: none;    /* quita cualquier resalte de foco */
+  }
+
+  /* Si quieres mantener un efecto visual al hacer foco, puedes usar un borde verde suave */
+  button.focus-visible:focus {
+    outline: 2px solid #34d399; /* borde verde al enfocar con teclado */
+    outline-offset: 2px;
+  }
+  .children { overflow: hidden; max-height: 0; transition: max-height 260ms ease; }
+  .children.open { max-height: 1200px; }
+  .node-btn { display: inline-flex; align-items: center; gap: .5rem; }
+  .match { background: rgba(59,130,246,0.1); border-radius: .25rem; }
+  .focus-ring:focus { outline: 3px solid rgba(34,197,94,0.25); outline-offset: 2px; }
+  .tree-svg text { font-style: italic; font-size: 12px; }
+  #details a { color: #0f766e; word-break: break-word; }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen p-4 md:p-6 text-gray-800">
+<div class="max-w-6xl mx-auto">
+
+<header class="mb-6">
+  <h1 class="text-3xl font-bold text-green-700"> Mapa taxonómico interactivo</h1>
+  <p class="text-sm text-gray-600 mt-3">Un proyecto de microalgas que te permite aprender sobre la diversidad de estas especies.</p>
+</header>
+
+<!-- Panel de instrucciones -->
+<section class="bg-green-50 p-4 rounded-lg mb-4">
+  <button id="toggleInstructions" class="text-green-800 font-semibold w-full text-left focus:ring focus:ring-green-200 p-2 rounded">
+      Cómo usar el Mapa Taxonómico Interactivo
+  </button>
+  <div id="instructions" class="mt-2 hidden text-sm text-gray-700">
+    <ol class="list-decimal list-inside space-y-2">
+      <li><b>Buscar una especie:</b> Escribe el nombre y presiona Enter o el botón Buscar especie.</li>
+      <li><b>Explorar el árbol:</b> Haz clic en los nodos para abrir/cerrar ramas, o usa Expandir todo.</li>
+      <li><b>Ver detalles:</b> Haz clic en un nodo de especie para ver ilustración, clasificación y datos adicionales.</li>
+      <li><b>Limpiar búsqueda:</b> Reinicia el árbol y borra resultados.</li>
+      <li><b>Comparar especies:</b> El dendrograma resalta la especie buscada en rojo.</li>
+    </ol>
+  </div>
+</section>
+
+<div class="flex flex-col md:flex-row gap-6">
+  <!-- Panel principal: árbol -->
+  <section class="flex-1 bg-white p-4 rounded-lg shadow-sm">
+    <div class="mb-4 flex flex-wrap gap-2">
+      <input id="search" placeholder="Buscar especie (ej. Volvox aureus)" class="flex-1 p-2 border rounded focus:ring focus:ring-green-200" />
+      <button id="expandAll" class="px-3 py-2 bg-teal-600 text-white rounded">Expandir todo</button>
+      <button id="clearSearch" class="px-3 py-2 bg-red-500 text-white rounded">Limpiar</button>
+      <button id="searchAPI" class="px-3 py-2 bg-green-700 text-white rounded">Buscar especie</button>
+    </div>
+    <div id="treeContainer" class="text-sm mb-4"></div>
+    <h3 class="font-semibold mt-4 mb-2">Árbol comparativo de Clorofitas:</h3>
+    <div id="comparativeTree"></div>
+  </section>
+
+  <!-- Panel lateral: detalles -->
+  <aside class="w-full md:w-80 bg-white p-4 rounded-lg shadow-sm">
+    <div id="details" class="mt-3 text-sm text-gray-700">
+      <p class="text-gray-400">Busca una microalga o haz clic en un nodo para ver detalles aquí.</p>
+    </div>
+  </aside>
+</div>
+
+<footer class="bg-green-100 mt-6 py-4 text-center text-xs text-gray-600">
+  Todos los derechos reservados a Biología Ilustrativa 2025
+</footer>
+
+<script>
+let taxonomy = null;
+
+// Ilustraciones
+const ilustraciones = {
+  "Volvox aureus": "Volvox.png",
+  "Volvox": "Volvox.png",
+  "Chlorella sp.": "Chlorella vulgaris.png",
+  "Euglena": "Euglena.png",
+  "Chlorella vulgaris": "Chlorella vulgaris.png",
+  "Scenedesmus sp.": "Scenedesmus.png",
+  "Chlamydomonas reinhardtii": "Chamydomonas.png",
+  "Spirogyra sp.": "Spirogyra.png",
+  "Ulva lactuca": "Ulva.png",
+  "Cladophora sp.": "Cladophora.png",
+  "Haematococcus pluvialis": "Haematococcus.png",
+  "Pediastrum duplex": "Pediastrum.png",
+  "Oedogonium sp.": "Oedogonium.png",
+  "Hydrodictyon reticulatum": "Hydrodictyon.png"
+};
+
+// Datos adicionales de especies
+const speciesInfo = {
+  "Volvox aureus": {
+    habitat: "Agua dulce, estanques y charcas.",
+    size: "Diámetro aproximado: 0.5 mm",
+    biotecnology: "Investigación en biología celular y fotosíntesis."
+  },
+  "Chlorella vulgaris": {
+    habitat: "Agua dulce y suelos húmedos.",
+    size: "0.003 – 0.01 mm",
+    biotecnology: "Producción de antioxidantes, suplementos nutricionales, biofertilizantes y biocombustibles.",
+    
+  },
+  "Chlamydomonas reinhardtii": {
+    habitat: "Agua dulce, suelos húmedos.",
+    size: "10-12 µm",
+    biotecnology: "Investigación genética y fotosíntesis.",
+  },
+  "Scenedesmus": {
+    habitat: "Agua dulce y ambientes eutróficos.",
+    size: "8-15 µm",
+    biotecnology: "Producción de biomasa y biocombustibles.",
+  },
+  "Pediastrum duplex": {
+    habitat: "Agua dulce.",
+    size: "30-50 µm",
+    biotecnology: "Estudios ecológicos y bioindicadores.",
+  },
+
+  "Ulva lactuca": {
+    habitat: "Ambientes marinos costeros.",
+    size: "Puede medir hasta 60 cm",
+    biotecnology: "Alimentación, biocombustibles, suplementos alimenticios.",
+    
+  },
+  "Cladophora": {
+    habitat: "Ambientes acuáticos dulces y salobres.",
+    size: "5-20 µm",
+    biotecnology: "Estudios ecológicos y producción de biomasa.",
+  },
+    
+  "Haematococcus pluvialis": {
+    habitat: "Agua dulce, estanques y charcas.",
+    size: "10-30 µm",
+    biotecnology: "Producción de astaxantina (antioxidante potente).",
+  },
+  "Spirogyra": {
+    habitat: "Agua dulce y corrientes lentas.",
+    size: "Filamentos de 10-100 µm",
+    biotecnology: "Estudios de fotosíntesis y ecología.",
+   
+  },
+  "Oedogonium": {
+    habitat: "Agua dulce y suelos húmedos.",
+    size: "Filamentos 10-20 µm",
+    biotecnology: "Estudios ecológicos.",
+   
+  },
+  "Hydrodictyon reticulatum": {
+    habitat: "Agua dulce y estanques.",
+    size: "Redes de hasta 2 cm",
+    biotecnology: "Investigación ecológica y estudios de crecimiento de algas.",
+
+  },
+
+  "Euglena": {
+    habitat: "Agua dulce, especialmente en charcas, estanques y aguas ricas en materia orgánica; también pueden encontrarse en suelos húmedos.",
+    size: "15–500 µm (dependiendo de la especie y las condiciones).",
+    biotecnology: "Investigación en fotosíntesis y biología celular; producción de biocombustibles, suplementos nutricionales y pigmentos; modelo en estudios de movilidad y adaptación de organismos fotosintéticos mixótrofos."
+  }
+};
+
+const speciesInfoLocal = {
+  "Anabaena sp": { habitat:"Agua dulce, charcas y lagos", size:"2-8 µm", biotecnology:"Fijación de nitrógeno, producción de biofertilizantes" },
+  "Nostoc commune": { habitat:"Suelos húmedos, agua dulce", size:"2-12 µm", biotecnology:"Producción de polisacáridos, biofertilizantes" },
+  "Oscillatoria sp.": { habitat:"Agua dulce y salobre", size:"5-10 µm", biotecnology:"Estudios ecológicos y fotosíntesis" },
+  "Microcystis aeruginosa": { habitat:"Estanques eutróficos y lagos", size:"2-6 µm", biotecnology:"Modelos de toxicología y control de cianobacterias" },
+  "Lyngbya sp": { habitat:"Agua dulce y marinas", size :"5-8 µm", biotecnology:"Producción de compuestos bioactivos" },
+  "Aphanizomenon flos-aquae": { habitat:"Agua dulce", size:"2-5 µm", biotecnology:"Suplementos nutricionales, estudios ecológicos" },
+  "Trichodesmium sp.": { habitat:"Océanos tropicales", size:"4-6 µm", biotecnology:"Fijación de nitrógeno, estudios oceánicos" },
+  "Gloeocapsa sp.": { habitat:"Rocas húmedas, agua dulce", size:"3-6 µm", biotecnology:"Producción de pigmentos y biomasa" },
+  "Chamaesiphon sp.": { habitat:"Ríos y cascadas", size:"2-5 µm", biotecnology:"Estudios ecológicos y fotosíntesis" },
+  "Synechococcus sp.": { habitat:"Océanos y agua dulce", size:"0.8-1.5 µm", biotecnology:"Producción de biomasa y biofármacos" },
+  "Euglena": { habitat: "Agua dulce, especialmente en charcas, estanques y aguas ricas en materia orgánica; también pueden encontrarse en suelos húmedos.",
+    size: "15–500 µm (dependiendo de la especie y las condiciones).", biotecnology: "Investigación en fotosíntesis y biología celular; producción de biocombustibles, suplementos nutricionales y pigmentos; modelo en estudios de movilidad y adaptación de organismos fotosintéticos mixótrofos."
+  },
+
+
+}
+// Dendrograma inicial
+const dendroData = {
+  name: "Chlorophyta",
+  children: [
+    { name: "Chlorophyceae", children: [
+      { name: "Volvox aureus" },
+      { name: "Chlorella vulgaris" },
+      { name: "Chlamydomonas reinhardtii" },
+      { name: "Scenedesmus" },
+      { name: "Pediastrum duplex" }
+    ]},
+    { name: "Ulvophyceae", children: [
+      { name: "Ulva lactuca" },
+      { name: "Cladophora" }
+    ]},
+    { name: "Zygnematophyceae", children: [
+      { name: "Spirogyra" },
+      { name: "Oedogonium" },
+      { name: "Haematococcus pluvialis" }
+    ]},
+    { name: "Charophyceae", children: [
+      { name: "Hydrodictyon reticulatum" }
+    ]}
+  ]
+};
+
+// ---------- Funciones ----------
+
+// Crear nodo
+function createNodeElement(node, path=''){
+  const li=document.createElement('li'); li.className='mb-1';
+  const nodeId=path? path+' / '+node.name : node.name;
+
+  const btn=document.createElement('button');
+  btn.className='node-btn focus-ring p-1 rounded hover:bg-gray-50 w-full text-left';
+  btn.type='button';
+  btn.setAttribute('aria-expanded','false');
+  btn.setAttribute('data-path', nodeId);
+
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('width','14'); svg.setAttribute('height','14');
+  svg.setAttribute('viewBox','0 0 20 20'); svg.classList.add('chev');
+  svg.innerHTML='<path d="M6 4l8 6-8 6V4z" fill="currentColor"/>';
+
+  const textWrap=document.createElement('span'); textWrap.className='flex items-center justify-between w-full';
+  const textLeft=document.createElement('span');
+  textLeft.innerHTML=`<strong class="block"><em>${node.name}</em></strong>`+(node.rank?`<span class="block text-xs text-gray-500">${node.rank}</span>`:'');
+  textWrap.appendChild(textLeft);
+
+  btn.appendChild(svg); btn.appendChild(textWrap); li.appendChild(btn);
+
+  if(node.children && node.children.length){
+    const children=document.createElement('ul'); children.className='children pl-4 mt-2';
+    node.children.forEach((child,idx)=>children.appendChild(createNodeElement(child,nodeId+'#'+idx)));
+    btn.addEventListener('click',()=>{ const isOpen=children.classList.toggle('open'); btn.setAttribute('aria-expanded',String(isOpen)); });
+    li.appendChild(children);
+  } else {
+    btn.addEventListener('click',()=>showDetails(node));
+  }
+  return li;
+}
+
+// Mostrar detalles
+function showDetails(node){
+  const details=document.getElementById('details');
+  const imagen=ilustraciones[node.name] || 'placeholder.png';
+  // Aquí combinamos las fuentes de información, priorizando node.info si existe
+  const info = node.info || speciesInfo[node.name] || speciesInfoLocal[node.name] || { habitat:'-', size:'-', biotecnology:'-'};
+  details.innerHTML=`
+    <h2 class="text-xl font-bold mb-2"><em>${node.name}</em></h2>
+    <img src="${imagen}" alt="${node.name}" width="120" class="mx-auto mb-3">
+  <h3 class="font-semibold mb-2">Clasificación:</h3>
+    <ul class="list-disc list-inside mb-3">
+      <li><b>Reino:</b> ${node.kingdom || ''}</li>
+      <li><b>División:</b> ${node.division || node.phylum || ''}</li>
+      <li><b>Clase:</b> ${node.class || ''}</li>
+      <li><b>Orden:</b> ${node.order || ''}</li>
+      <li><b>Género:</b> ${node.genus || ''}</li>
+      <li><b>Especie:</b> ${node.species || node.name}</li>
+    </ul>
+  <h3 class="font-semibold mb-2">Información complementaria:</h3>
+    <ul class="list-disc list-inside">
+  <li><b>Hábitat:</b> ${info.habitat}</li>
+  <li><b>Tamaño promedio:</b> ${info.size}</li>
+  <li><b>Uso biotecnológico:</b> ${info.biotecnology}</li>
+    </ul>
+  `;
+}
+
+// Renderizar árbol
+function renderTree(){
+  const root=document.getElementById('treeContainer'); root.innerHTML='';
+  if(!taxonomy) taxonomy=dendroData;
+  const ul=document.createElement('ul'); ul.className='pl-2';
+  ul.appendChild(createNodeElement(taxonomy,''));
+  root.appendChild(ul);
+}
+
+// Renderizar dendrograma comparativo
+function renderComparativeTree(highlight=''){
+  const container=document.getElementById('comparativeTree'); container.innerHTML='';
+  const width=400; const svgNS='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(svgNS,'svg'); svg.setAttribute('width', width); svg.setAttribute('height', 1000);
+  let yPos = 20;
+
+  function drawNode(node, depth, parentX, parentY){
+    const x = 50 + depth * 120;
+    const y = yPos; yPos += 40;
+
+    if(parentX !== null && parentY !== null){
+      const line=document.createElementNS(svgNS,'line');
+      line.setAttribute('x1', parentX); line.setAttribute('y1', parentY);
+      line.setAttribute('x2', x); line.setAttribute('y2', y);
+      line.setAttribute('stroke','#888'); line.setAttribute('stroke-width',1.5);
+      svg.appendChild(line);
+    }
+
+    const text=document.createElementNS(svgNS,'text');
+    text.setAttribute('x', x); text.setAttribute('y', y);
+    text.setAttribute('fill', node.name.toLowerCase()===highlight.toLowerCase()?'red':'black');
+    text.setAttribute('font-style','italic'); text.setAttribute('font-size','12px');
+    text.textContent=node.name; svg.appendChild(text);
+
+    if(node.children && node.children.length){ node.children.forEach(child=>drawNode(child, depth+1, x, y)); }
+  }
+
+  drawNode(dendroData,0,null,null);
+  container.appendChild(svg);
+}
+
+// ---------- Utilidades ----------
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+function clearSearch(){
+  document.getElementById('search').value='';
+  document.getElementById('details').innerHTML=`<p class="text-gray-400">Busca una microalga o haz clic en un nodo para ver detalles aquí.</p>`;
+  taxonomy=null; renderTree(); renderComparativeTree();
+}
+function setAllOpen(open){
+  document.querySelectorAll('.children').forEach(c=>open?c.classList.add('open'):c.classList.remove('open'));
+  document.querySelectorAll('#treeContainer button').forEach(b=>b.setAttribute('aria-expanded',String(open)));
+}
+
+// ---------- Eventos ----------
+document.addEventListener('DOMContentLoaded',()=>{
+  const searchInput=document.getElementById('search');
+  document.getElementById('expandAll').addEventListener('click',()=>setAllOpen(true));
+  document.getElementById('clearSearch').addEventListener('click',clearSearch);
+  document.getElementById('searchAPI').addEventListener('click',()=>{ const q=searchInput.value.trim(); if(q) fetchSpecies(q); });
+  searchInput.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); const q=searchInput.value.trim(); if(q) fetchSpecies(q); } });
+  document.getElementById('toggleInstructions').addEventListener('click',()=>{ document.getElementById('instructions').classList.toggle('hidden'); });
+
+  renderTree();
+  renderComparativeTree();
+});
+
+// ---------- Búsqueda API con validación de filo ----------
+async function fetchSpecies(name){
+  const res = await fetch(`https://api.gbif.org/v1/species/match?name=${encodeURIComponent(name)}`);
+  const data = await res.json();
+  if(!data.usageKey){ alert(`No se encontró la especie "${name}"`); return; }
+
+  const speciesResp = await fetch(`https://api.gbif.org/v1/species/${data.usageKey}`);
+  const sData = await speciesResp.json();
+
+  if(sData.phylum !== "Chlorophyta"){
+    const nodeName = sData.species || sData.canonicalName || name;
+    const info = speciesInfoLocal[nodeName];
+    const tempNode = {
+        name: nodeName,
+        kingdom: sData.kingdom || '',
+        division: sData.phylum || '',
+        class: sData.class || '',
+        order: sData.order || '',
+        genus: sData.genus || '',
+        species: sData.species,
+        rank: 'Especie',
+        image: ilustraciones[nodeName] || 'placeholder.png',
+        info: info
+    };
+
+    if(!info){
+        alert(`La especie "${nodeName}" no pertenece a Clorophyta y no tenemos información local disponible.`);
+    } else {
+        alert(`La especie "${nodeName}" no pertenece a Clorophyta, ¡pero tenemos información sobre esta especie! :)`);
+    }
+
+    showDetails(tempNode);
+    return;
+  }
+
+  // --- Construir nodo ---
+  const newNode = {
+    name: sData.species || sData.canonicalName || name,
+    kingdom: sData.kingdom || '',
+    division: sData.phylum || '',
+    class: sData.class || '',
+    order: sData.order || '',
+    genus: sData.genus || '',
+    species: sData.species,
+    rank: 'Especie',
+    image: ilustraciones[name] || 'placeholder.png'
+  };
+
+  // --- Función para verificar si ya existe ---
+  function exists(node, nodeName){
+    if(node.name === nodeName) return true;
+    if(node.children) return node.children.some(child=>exists(child,nodeName));
+    return false;
+  }
+
+  // --- Agregar al árbol ---
+  if(!exists(dendroData,newNode.name)){
+    // Buscar "Otras especies"
+    let otras = dendroData.children.find(c => c.name === "Otras especies");
+    if(!otras){
+      otras = { name: "Otras especies", children: [] };
+      dendroData.children.push(otras);
+    }
+    otras.children.push(newNode);
+  }
+
+  // Actualizar visualización
+  taxonomy = dendroData;
+  renderTree();
+  renderComparativeTree(newNode.name);
+  showDetails(newNode);
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
